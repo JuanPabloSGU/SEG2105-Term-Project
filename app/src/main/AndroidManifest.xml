@@ -10,6 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FitnessCentreBookingApp">
         <activity
+            android:name=".Administrator"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".Member"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".Instructor"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
