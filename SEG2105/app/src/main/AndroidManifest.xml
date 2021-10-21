@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SEG2105">
         <activity
+            android:name=".EditClasses"
+            android:exported="true" />
+        <activity
             android:name=".CreateClasses"
             android:exported="true"
             android:parentActivityName=".AdminPage" />

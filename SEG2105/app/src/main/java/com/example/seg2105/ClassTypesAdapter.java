@@ -1,5 +1,7 @@
 package com.example.seg2105;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -56,13 +58,20 @@ public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.Vi
 
         Button descriptionButton = holder.description;
         descriptionButton.setText("Edit Class Description");
+
         descriptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //class_type.editClassDescription();
+                Intent intent = new Intent(view.getContext().getApplicationContext(), EditClasses.class);
+                intent.putExtra("classId", class_type.getId());
+                ((Activity)view.getContext()).startActivityForResult(intent,1);
+
             }
         });
+
     }
+
+
 
     // Returns the total count of items in the list
     @Override
