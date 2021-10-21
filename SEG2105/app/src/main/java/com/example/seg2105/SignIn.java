@@ -3,6 +3,7 @@ package com.example.seg2105;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -69,6 +70,7 @@ public class SignIn extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             System.out.println("role: " + task.getResult().getData().get("name"));
                                             //role_details.setText("role: " + task.getResult().getData().get("name"));
+
                                         }
                                     });
 
@@ -102,6 +104,18 @@ public class SignIn extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             reload();
 //                            updateUI(user);
+
+                            // This is for them
+                            // Change that it works if user puts in a actual admin account
+                            if(email.equals("admin") && password.equals("admin123")){
+                                Intent intent = new Intent(getApplicationContext(), MainActivity3.class);
+                                SignIn.this.startActivity(intent);
+                            }else{
+                                // Welcome page
+                                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                                SignIn.this.startActivity(intent);
+                            }
+
                         } else {
                             System.out.println("logged in failed");
 
@@ -121,4 +135,5 @@ public class SignIn extends AppCompatActivity {
     private void reload() {
         authCheck();
     }
+
 }
