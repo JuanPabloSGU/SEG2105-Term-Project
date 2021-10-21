@@ -28,12 +28,14 @@ import java.util.concurrent.ExecutionException;
 public class UserView {
     private String username;
     public String role;
+    public String email;
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static FirebaseAuth mAuth =  FirebaseAuth.getInstance();;
     public String id;
 
-    public UserView(String username, String role, String id){
+    public UserView(String username, String role, String id, String email){
         this.username = username;
+        this.email = email;
         this.role = role;
         this.id = id;
     }
@@ -78,7 +80,7 @@ public class UserView {
             }
         });
 
-        return new UserView(username, user_role, user_id[0]);
+        return new UserView(username, user_role, user_id[0], user_email);
 
     }
 
@@ -86,7 +88,34 @@ public class UserView {
         void onSuccess(UserView user);
     }
 
-    public static void getUser(String user_id, GetUserInterface method) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException {
+    public static void getUserByUsername(String username, GetUserInterface method) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ArrayList<UserView> users = new ArrayList<UserView>();
+
+                    QuerySnapshot task = Tasks.await(db.collection("users").whereEqualTo("username", username).get());
+
+
+                    DocumentSnapshot document = task.getDocuments().get(0);
+                    DocumentSnapshot role_task = Tasks.await(document.getDocumentReference("role").get());
+                    String user_role = role_task.get("name").toString();
+                    String user_id = document.get("user_id").toString();
+                    String user_email = document.get("email").toString();
+                    UserView temp_user = new UserView(username, user_role, user_id, user_email);
+                    method.onSuccess(temp_user);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    public static void getUserByID(String user_id, GetUserInterface method) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -102,9 +131,8 @@ public class UserView {
                     DocumentSnapshot role_task = Tasks.await(document.getDocumentReference("role").get());
                     String user_name = document.get("username").toString();
                     String user_role = role_task.get("name").toString();
-                    UserView temp_user = new UserView(user_name, user_role, user_id);
-                    Object[] parameters = new Object[1];
-                    parameters[0] = temp_user;
+                    String user_email = document.get("email").toString();
+                    UserView temp_user = new UserView(user_name, user_role, user_id,user_email);
                     method.onSuccess(temp_user);
                 } catch (ExecutionException e) {
                     e.printStackTrace();

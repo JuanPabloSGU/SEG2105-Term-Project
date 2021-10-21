@@ -47,7 +47,23 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 System.out.println(username.getText().toString() + ", " + password.getText().toString());
-                signIn(username.getText().toString(), password.getText().toString());
+                try {
+                    if(username.getText().toString().indexOf('@') != -1){
+                        System.out.println("using email sign in");
+                        signIn(username.getText().toString(), password.getText().toString());
+                    } else {
+                        signInWithUsername(username.getText().toString(), password.getText().toString());
+                    }
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -90,12 +106,59 @@ public class SignIn extends AppCompatActivity {
         }
     }
 
+    private void signInWithUsername(String username, String password) throws InterruptedException, ExecutionException, IllegalAccessException, InvocationTargetException {
+
+        UserView.getUserByUsername(username, new UserView.GetUserInterface() {
+            @Override
+            public void onSuccess(UserView user) {
+                System.out.println("USER ASDFASDFASDF: " + user.email);
+                mAuth.signInWithEmailAndPassword(user.email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            System.out.println("logged in success");
+                                    // Sign in success, update UI with the signed-in user's information
+                            reload();
+                            System.out.println("USER ROLE!!: " + user.role);
+                                                if(user.role.equals("admin")){
+                                                    Intent intent = new Intent(getApplicationContext(), AdminPage.class);
+                                                    SignIn.this.startActivity(intent);
+                                                }else{
+                                                    // Welcome page
+                                                    Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+
+                                                    String userInformation = user.getUsername();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("Role", user.role);
+                                                    bundle.putString("Name", user.getUsername());
+                                                    intent.putExtras(bundle);
+
+                                                    SignIn.this.startActivity(intent);
+                                                }
+
+                                } else {
+                                    System.out.println("logged in failed");
+
+                                    // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                    Toast.makeText(SignIn.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    reload();
+//                            updateUI(null);
+                                }
+                            }
+                        });
+                // [END sign_in_with_email]
+            }
+        });
+
+        // [START sign_in_with_email]
+
+    }
+
 
     private void signIn(String email, String password) {
-//        TextView login_details = findViewById(R.id.login_details);
-//        TextView role_details = findViewById(R.id.role_details);
-//        login_details.setText("loading...");
-//        role_details.setText("loading...");
+
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -108,7 +171,7 @@ public class SignIn extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             reload();
                             try {
-                                UserView.getUser(user.getUid(),  new UserView.GetUserInterface() {
+                                UserView.getUserByID(user.getUid(),  new UserView.GetUserInterface() {
 
                                     @Override
                                     public void onSuccess(UserView user) {

@@ -86,7 +86,8 @@ public class UserManager extends AppCompatActivity {
             String user_name = document.get("username").toString();
             String user_id = document.get("user_id").toString();
             String user_role = role_task.get("name").toString();
-            UserView temp_user = new UserView(user_name, user_role, user_id);
+            String user_email = document.get("email").toString();
+            UserView temp_user = new UserView(user_name, user_role, user_id, user_email);
             users.add(temp_user);
         }
 
