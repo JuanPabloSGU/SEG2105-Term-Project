@@ -2,7 +2,10 @@ package com.example.seg2105;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,13 +13,18 @@ import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class SignUp extends AppCompatActivity {
 
@@ -32,9 +40,6 @@ public class SignUp extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        email = findViewById(R.id.email);
-        username = findViewById(R.id.user_name);
-        password = findViewById(R.id.password);
         instructor = findViewById(R.id.instructor_button);
         gymMember = findViewById(R.id.gymMember_button);
         signUp = findViewById(R.id.signup_button);
@@ -56,12 +61,20 @@ public class SignUp extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+                EditText username = (EditText) findViewById(R.id.username);
+                EditText email = (EditText) findViewById(R.id.email);
+                EditText password = (EditText) findViewById(R.id.password);
+
+                System.out.println(username.getText().toString() + ", " + email.getText().toString() + ", " + password.getText().toString() + ", " + role);
+
                 addUser(username.getText().toString(), email.getText().toString(), password.getText().toString(), role);
+                System.out.println("User Created");
             }
         });
+
     }
 
-    EditText username, email, password;
     Button instructor, gymMember, signUp;
 
     public void createDemoUser(){
@@ -92,4 +105,5 @@ public class SignUp extends AppCompatActivity {
             }
         });
     }
+
 }
