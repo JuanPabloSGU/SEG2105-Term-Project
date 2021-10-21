@@ -32,18 +32,17 @@ public class CreateClasses extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        EditText nameOfClass = (EditText) findViewById(R.id.nameOfClass);
+        EditText descriptionOfClass = (EditText) findViewById(R.id.descriptionClass);
+        EditText dayOfClass = (EditText) findViewById(R.id.day);
+        EditText capacityOfClass = (EditText) findViewById(R.id.capacity);
 
         createClassButton = findViewById(R.id.createClassButton);
         createClassButton.setOnClickListener(new View.OnClickListener() {
 
-            EditText nameOfClass = (EditText) findViewById(R.id.nameOfClass);
-            EditText descriptionOfClass = (EditText) findViewById(R.id.descriptionClass);
-            EditText dayOfClass = (EditText) findViewById(R.id.day);
-            EditText capacityOfClass = (EditText) findViewById(R.id.capacity);
-            int capacityOfTheClass = Integer.parseInt(capacityOfClass.getText().toString());
-
             @Override
             public void onClick(View v){
+                int capacityOfTheClass = Integer.parseInt(capacityOfClass.getText().toString());
                 ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass);
             }
         });
