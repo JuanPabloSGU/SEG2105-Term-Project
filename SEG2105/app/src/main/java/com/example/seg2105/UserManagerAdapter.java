@@ -43,7 +43,7 @@ public class UserManagerAdapter extends RecyclerView.Adapter<UserManagerAdapter.
 
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
-        textView.setText(user.getUsername());
+        textView.setText("Username : " + user.getUsername() + ", Role : " + user.getRole());
         Button button = holder.deleteButton;
         button.setText("Delete");
     }

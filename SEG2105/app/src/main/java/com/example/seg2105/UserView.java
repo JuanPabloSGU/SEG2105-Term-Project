@@ -41,6 +41,7 @@ public class UserView {
     public String getUsername(){
         return this.username;
     }
+    public String getRole(){return this.role;}
 
     public static UserView createUser(String username, String user_email, String user_password, String user_role, customCallback... cb){
         DocumentReference finalUser_role = null;

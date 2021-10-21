@@ -1,6 +1,7 @@
 package com.example.seg2105;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,15 @@ public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.Vi
                 class_type.delete();
             }
         });
+
+        Button descriptionButton = holder.description;
+        descriptionButton.setText("Edit Class Description");
+        descriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //class_type.editClassDescription();
+            }
+        });
     }
 
     // Returns the total count of items in the list
@@ -65,6 +75,7 @@ public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.Vi
         // for any view that will be set as you render a row
         public TextView nameTextView;
         public Button deleteButton;
+        public Button description;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -75,6 +86,7 @@ public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.Vi
 
             nameTextView = (TextView) itemView.findViewById(R.id.class_type_name);
             deleteButton = (Button) itemView.findViewById(R.id.delete_button);
+            description = (Button) itemView.findViewById(R.id.editDescription);
         }
     }
 }

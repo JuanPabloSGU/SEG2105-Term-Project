@@ -41,15 +41,15 @@ public class UserManager extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        View add_user = findViewById(R.id.add_user_button);
-
-        add_user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("Creating user");
-                createDemoUser();
-            }
-        });
+//        View add_user = findViewById(R.id.add_user_button);
+//
+//        add_user.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                System.out.println("Creating user");
+//                createDemoUser();
+//            }
+//        });
 
 
         new Thread(new Runnable() {
@@ -91,7 +91,7 @@ public class UserManager extends AppCompatActivity {
         }
 
         for(int i = 0; i < users.size(); i++){
-            System.out.println("User name: " + users.get(i).getUsername());
+            System.out.println("User name: " + users.get(i).getUsername() + "Role : " + users.get(i).getRole());
         }
         runOnUiThread(new Runnable() {
             @Override

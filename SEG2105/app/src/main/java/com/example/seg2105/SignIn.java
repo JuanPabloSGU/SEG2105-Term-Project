@@ -119,6 +119,13 @@ public class SignIn extends AppCompatActivity {
                                         }else{
                                             // Welcome page
                                             Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+
+                                            String userInformation = user.getUsername();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("Role", user.role);
+                                            bundle.putString("Name", user.getUsername());
+                                            intent.putExtras(bundle);
+
                                             SignIn.this.startActivity(intent);
                                         }
                                     }
