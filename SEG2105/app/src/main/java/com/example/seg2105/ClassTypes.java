@@ -45,4 +45,14 @@ public class ClassTypes {
     public String getId(){
         return this.id;
     }
+    public static void editClassDescription(String id, String new_description){
+        ClassTypes.editClassDescriptionInternally(id, new_description);
+    }
+
+    public void editClassDescription(String new_description){
+        this.editClassDescriptionInternally(this.id, new_description);
+    }
+    private static void editClassDescriptionInternally(String id, String new_description){
+        db.collection("class_types").document(id).update("description", new_description);
+    }
 }

@@ -41,7 +41,6 @@ public class UserManager extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-//        createDemoUser();
         View add_user = findViewById(R.id.add_user_button);
 
         add_user.setOnClickListener(new View.OnClickListener() {
@@ -71,37 +70,9 @@ public class UserManager extends AppCompatActivity {
     }
 
     public void createDemoUser(){
-        addUser("adam3", "adam3@databending.ca", "admin123", "instructor");
+        UserView.createUser("adam3", "adam3@databending.ca", "admin123", "instructor");
     }
 
-    public void deleteUser(String user_id) {
-        db.collection("users").document(user_id).delete();
-    }
-
-    public void addUser(String user_name, String user_email, String user_password, String user_role){
-        DocumentReference finalUser_role = null;
-        switch(user_role){
-            case "instructor":
-                finalUser_role = db.document("roles/3xQrDfZhc7Kdjr9TTueY");
-                break;
-            case "member":
-                finalUser_role = db.document("/roles/KhXfzrrVCK2dJtSoQeWX");
-                break;
-        }
-        DocumentReference finalUser_role1 = finalUser_role;
-        mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                System.out.println("Created user successfully");
-                String user_id = task.getResult().getUser().getUid();
-                Map<String, Object> data1 = new HashMap<>();
-                data1.put("user_id", user_id);
-                data1.put("username", user_name);
-                data1.put("role", finalUser_role1);
-                db.collection("users").add(data1);
-            }
-        });
-    }
 
     public void loadUsers() throws ExecutionException, InterruptedException {
         System.out.println("loading users");
@@ -120,7 +91,7 @@ public class UserManager extends AppCompatActivity {
         }
 
         for(int i = 0; i < users.size(); i++){
-            System.out.println("User name: " + users.get(i).name);
+            System.out.println("User name: " + users.get(i).getUsername());
         }
         runOnUiThread(new Runnable() {
             @Override

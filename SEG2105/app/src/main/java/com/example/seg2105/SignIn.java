@@ -21,6 +21,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.ExecutionException;
+
 public class SignIn extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -87,6 +90,7 @@ public class SignIn extends AppCompatActivity {
         }
     }
 
+
     private void signIn(String email, String password) {
 //        TextView login_details = findViewById(R.id.login_details);
 //        TextView role_details = findViewById(R.id.role_details);
@@ -103,18 +107,32 @@ public class SignIn extends AppCompatActivity {
 //                            Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             reload();
-//                            updateUI(user);
+                            try {
+                                UserView.getUser(user.getUid(),  new UserView.GetUserInterface() {
 
-                            // This is for them
-                            // Change that it works if user puts in a actual admin account
-                            if(email.equals("admin@databending.ca") && password.equals("admin123")){
-                                Intent intent = new Intent(getApplicationContext(), AdminPage.class);
-                                SignIn.this.startActivity(intent);
-                            }else{
-                                // Welcome page
-                                Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
-                                SignIn.this.startActivity(intent);
-                            }
+                                    @Override
+                                    public void onSuccess(UserView user) {
+                                        System.out.println("USER ROLE!!: " + user.role);
+                                        if(user.role.equals("admin")){
+                                            Intent intent = new Intent(getApplicationContext(), AdminPage.class);
+                                            SignIn.this.startActivity(intent);
+                                        }else{
+                                            // Welcome page
+                                            Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                                            SignIn.this.startActivity(intent);
+                                        }
+                                    }
+
+                                });
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            };
 
                         } else {
                             System.out.println("logged in failed");
