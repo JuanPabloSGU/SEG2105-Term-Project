@@ -107,8 +107,8 @@ public class SignIn extends AppCompatActivity {
 
                             // This is for them
                             // Change that it works if user puts in a actual admin account
-                            if(email.equals("admin") && password.equals("admin123")){
-                                Intent intent = new Intent(getApplicationContext(), MainActivity3.class);
+                            if(email.equals("admin@databending.ca") && password.equals("admin123")){
+                                Intent intent = new Intent(getApplicationContext(), AdminPage.class);
                                 SignIn.this.startActivity(intent);
                             }else{
                                 // Welcome page

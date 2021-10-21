@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SEG2105">
         <activity
+            android:name=".AdminPage"
+            android:exported="true" />
+        <activity
             android:name=".WelcomePage"
             android:exported="true" />
         <activity
@@ -31,11 +34,12 @@
         </activity>
         <activity
             android:name=".ClassTypesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".AdminPage"/>
         <activity
             android:name=".UserManager"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".AdminPage" />
         <activity
             android:name=".MainActivity3"
             android:exported="true"
