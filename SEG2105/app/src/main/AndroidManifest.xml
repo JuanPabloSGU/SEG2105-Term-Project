@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SEG2105">
         <activity
+            android:name=".CreateClasses"
+            android:exported="true"
+            android:parentActivityName=".AdminPage"/>
+        <activity
             android:name=".AdminPage"
             android:exported="true" />
         <activity
@@ -35,7 +39,7 @@
         <activity
             android:name=".ClassTypesActivity"
             android:exported="false"
-            android:parentActivityName=".AdminPage"/>
+            android:parentActivityName=".AdminPage" />
         <activity
             android:name=".UserManager"
             android:exported="false"

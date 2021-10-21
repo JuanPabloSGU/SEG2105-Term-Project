@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -49,7 +50,9 @@ public class ClassTypesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("Creating class");
-                createDemoClassType();
+                Intent intent = new Intent(getApplicationContext(), CreateClasses.class);
+                ClassTypesActivity.this.startActivity(intent);
+                //createDemoClassType();
             }
         });
 
