@@ -1,90 +1,60 @@
 package com.example.seg2105;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.Task;
-import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
-
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class MainActivity3 extends AppCompatActivity {
+public class SignIn extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    EditText username, password;
+    Button login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_in);
 
-        View login_button = findViewById(R.id.login);
-        View logout_button = findViewById(R.id.logout_button);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("Wahtever");
-                signIn("admin@databending.ca", "admin123");
-            }
-        });
-        logout_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                reload();
-            }
-        });
-        View user_manager_button = findViewById(R.id.user_manager);
-        user_manager_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentMain = new Intent(MainActivity3.this ,
-                        UserManager.class);
-                MainActivity3.this.startActivity(intentMain);
-            }
-        });
+        username = findViewById(R.id.user_name);
+        password = findViewById(R.id.password);
+        login = findViewById(R.id.login);
 
-        View class_type_button = findViewById(R.id.class_type_button);
-        class_type_button.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Intent intentMain = new Intent(MainActivity3.this ,
-                        ClassTypesActivity.class);
-                MainActivity3.this.startActivity(intentMain);
+            public void onClick(View v){
+                System.out.println(username.getText().toString() + ", " + password.getText().toString());
+                signIn(username.getText().toString(), password.getText().toString());
+
             }
         });
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        reload();
     }
 
     private void authCheck(){
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        TextView login_details = findViewById(R.id.login_details);
-        TextView role_details = findViewById(R.id.role_details);
+//        TextView login_details = findViewById(R.id.login_details);
+//        TextView role_details = findViewById(R.id.role_details);
         if(currentUser != null){
-            login_details.setText("logged in as: " + currentUser.getEmail());
+            //login_details.setText("logged in as: " + currentUser.getEmail());
             db.collection("users").whereEqualTo("user_id", currentUser.getUid())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -98,7 +68,7 @@ public class MainActivity3 extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                             System.out.println("role: " + task.getResult().getData().get("name"));
-                                            role_details.setText("role: " + task.getResult().getData().get("name"));
+                                            //role_details.setText("role: " + task.getResult().getData().get("name"));
                                         }
                                     });
 
@@ -110,16 +80,16 @@ public class MainActivity3 extends AppCompatActivity {
                         }
                     });
         } else {
-            login_details.setText("Not logged in");
-            role_details.setText("Not logged in");
+            //login_details.setText("Not logged in");
+            //role_details.setText("Not logged in");
         }
     }
 
     private void signIn(String email, String password) {
-        TextView login_details = findViewById(R.id.login_details);
-        TextView role_details = findViewById(R.id.role_details);
-        login_details.setText("loading...");
-        role_details.setText("loading...");
+//        TextView login_details = findViewById(R.id.login_details);
+//        TextView role_details = findViewById(R.id.role_details);
+//        login_details.setText("loading...");
+//        role_details.setText("loading...");
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -137,7 +107,7 @@ public class MainActivity3 extends AppCompatActivity {
 
                             // If sign in fails, display a message to the user.
 //                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity3.this, "Authentication failed.",
+                            Toast.makeText(SignIn.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             reload();
 //                            updateUI(null);
@@ -149,7 +119,6 @@ public class MainActivity3 extends AppCompatActivity {
 
 
     private void reload() {
-
         authCheck();
     }
 }

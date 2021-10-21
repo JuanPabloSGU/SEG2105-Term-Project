@@ -10,18 +10,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SEG2105">
         <activity
+            android:name=".SignUp"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".SignIn"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ClassTypesActivity"
             android:exported="false" />
         <activity
-            android:name=".UserManagerActivity"
-            android:exported="false" />
-        <activity
             android:name=".UserManager"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity3"
             android:exported="true"
-            android:label="LABEL FOR ACTIVITY ">
+            android:label="Admin Page"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

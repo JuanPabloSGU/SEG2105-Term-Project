@@ -7,4 +7,19 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="Pink">#FAAFBE</color>
+    <color name="Pink_Bow">#C48189</color>
+    <color name="Lipstick_Pink">#C48793</color>
+    <color name="Pig_Pink">#FDD7E4</color>
+    <color name="Pink_Rose">#E7A1B0</color>
+    <color name="Pink_Daisy">#E799A3</color>
+    <color name="Pink_Cupcake">#E45E9D</color>
+    <color name="Pink_Lemonade">#E4287C</color>
+    <color name="Rogue_Pink">#C12869</color>
+    <color name="Burnt_Pink">#C12267</color>
+    <color name="Bashful_Pink">#C25283</color>
+    <color name="Carnation_Pink">#C12283</color>
+    <color name="green">#1B5E20</color>
+    <color name="Pumpkin_Orange">#F87217</color>
 </resources>
