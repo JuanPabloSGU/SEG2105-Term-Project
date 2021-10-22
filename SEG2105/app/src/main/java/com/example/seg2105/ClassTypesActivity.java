@@ -42,8 +42,6 @@ public class ClassTypesActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-//        createDemoClassType();
-
         View create_class_type = findViewById(R.id.create_class_button);
 
         create_class_type.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +50,6 @@ public class ClassTypesActivity extends AppCompatActivity {
                 System.out.println("Creating class");
                 Intent intent = new Intent(getApplicationContext(), CreateClasses.class);
                 ClassTypesActivity.this.startActivity(intent);
-                //createDemoClassType();
             }
         });
 
@@ -71,41 +68,6 @@ public class ClassTypesActivity extends AppCompatActivity {
         }).start();
 
 
-    }
-
-    // Sample demo class we used to test the program
-    public void createDemoClassType(){
-        ClassTypes.create(db, "whatever", "some class", "12",20);
-    }
-
-    // Delete class by its id
-    public void deleteClass(String id) {
-        ClassTypes.delete(id);
-    }
-
-    public void createClassType(String user_name, String user_email, String user_password, String user_role){
-        DocumentReference finalUser_role = null;
-        switch(user_role){
-            case "instructor":
-                finalUser_role = db.document("roles/3xQrDfZhc7Kdjr9TTueY");
-                break;
-            case "member":
-                finalUser_role = db.document("/roles/KhXfzrrVCK2dJtSoQeWX");
-                break;
-        }
-        DocumentReference finalUser_role1 = finalUser_role;
-        mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                System.out.println("Created user successfully");
-                String user_id = task.getResult().getUser().getUid();
-                Map<String, Object> data1 = new HashMap<>();
-                data1.put("user_id", user_id);
-                data1.put("username", user_name);
-                data1.put("role", finalUser_role1);
-                db.collection("users").add(data1);
-            }
-        });
     }
 
     // Loads all users to display to screen for admin

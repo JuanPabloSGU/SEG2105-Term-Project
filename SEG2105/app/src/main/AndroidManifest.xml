@@ -51,17 +51,6 @@
             android:name=".UserManager"
             android:exported="false"
             android:parentActivityName=".AdminPage" />
-        <activity
-            android:name=".MainActivity3"
-            android:exported="true"
-            android:label="Admin Page"
-            android:parentActivityName=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

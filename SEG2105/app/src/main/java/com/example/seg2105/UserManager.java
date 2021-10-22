@@ -41,16 +41,6 @@ public class UserManager extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-//        View add_user = findViewById(R.id.add_user_button);
-//
-//        add_user.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                System.out.println("Creating user");
-//                createDemoUser();
-//            }
-//        });
-
 
         new Thread(new Runnable() {
             @Override
@@ -68,12 +58,6 @@ public class UserManager extends AppCompatActivity {
 
 
     }
-
-    // Sample demo user we used to test the programs
-    public void createDemoUser(){
-        UserView.createUser("adam3", "adam3@databending.ca", "admin123", "instructor");
-    }
-
 
     public void loadUsers() throws ExecutionException, InterruptedException {
         System.out.println("loading users");

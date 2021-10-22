@@ -22,7 +22,9 @@ public class CreateClasses extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    EditText nameOfClass, descriptionOfClass, dayOfClass, capacityOfClass;
+    EditText descriptionOfClass;
+    EditText dayOfClass;
+    EditText capacityOfClass;
     Button createClassButton;
 
     @Override
@@ -49,28 +51,4 @@ public class CreateClasses extends AppCompatActivity {
 
     }
 
-    public void createClassType(String user_name, String user_email, String user_password, String user_role){
-        DocumentReference finalUser_role = null;
-        switch(user_role){
-            case "instructor":
-                finalUser_role = db.document("roles/3xQrDfZhc7Kdjr9TTueY");
-                break;
-            case "member":
-                finalUser_role = db.document("/roles/KhXfzrrVCK2dJtSoQeWX");
-                break;
-        }
-        DocumentReference finalUser_role1 = finalUser_role;
-        mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                System.out.println("Created user successfully");
-                String user_id = task.getResult().getUser().getUid();
-                Map<String, Object> data1 = new HashMap<>();
-                data1.put("user_id", user_id);
-                data1.put("username", user_name);
-                data1.put("role", finalUser_role1);
-                db.collection("users").add(data1);
-            }
-        });
-    }
 }

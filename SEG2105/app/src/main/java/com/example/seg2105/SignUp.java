@@ -78,10 +78,6 @@ public class SignUp extends AppCompatActivity {
 
     Button instructor, gymMember, signUp;
 
-    // Sample demo user we used to test the program
-    public void createDemoUser(){
-        addUser("adam3", "adam3@databending.ca", "admin123", "instructor");
-    }
 
     public void addUser(String user_name, String user_email, String user_password, String user_role){
         DocumentReference finalUser_role = null;
