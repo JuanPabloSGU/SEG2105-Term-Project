@@ -33,20 +33,23 @@ public class UserView {
     private static FirebaseAuth mAuth =  FirebaseAuth.getInstance();;
     public String id;
 
-    public UserView(String username, String role, String id, String email){
+    public UserView(String username, String role, String id, String email){ // Generic constructor
         this.username = username;
         this.email = email;
         this.role = role;
         this.id = id;
     }
 
+    // Generic getters for class variables
     public String getUsername(){
         return this.username;
     }
     public String getRole(){return this.role;}
 
+    // Method used to create Users, returns the completed UserView at the end.
     public static UserView createUser(String username, String user_email, String user_password, String user_role, customCallback... cb){
         DocumentReference finalUser_role = null;
+        // Pulls different information from FireBase based on which role the user is.
         switch(user_role){
             case "instructor":
                 finalUser_role = db.document("roles/3xQrDfZhc7Kdjr9TTueY");
@@ -57,8 +60,10 @@ public class UserView {
         }
         DocumentReference finalUser_role1 = finalUser_role;
         final String[] user_id = new String[1];
+        // Creating user in FireBase with inputs from user
         mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
+            // After creating user, it adds user to FireBase
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     System.out.println("Created user successfully");
@@ -88,6 +93,8 @@ public class UserView {
         void onSuccess(UserView user);
     }
 
+    // Method that grabs UserView class from FireBase for comparison when logging in. Uses username
+    // to compare, and then later compares password credentials.
     public static void getUserByUsername(String username, GetUserInterface method) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException {
         new Thread(new Runnable() {
             @Override
@@ -105,6 +112,7 @@ public class UserView {
                     String user_email = document.get("email").toString();
                     UserView temp_user = new UserView(username, user_role, user_id, user_email);
                     method.onSuccess(temp_user);
+                    // Generic exception catchers
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -115,6 +123,8 @@ public class UserView {
 
     }
 
+    // Another method that grabs UserView class from FireBase for comparison when logging in. Uses
+    // id instead of username to compare with the database.
     public static void getUserByID(String user_id, GetUserInterface method) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException {
         new Thread(new Runnable() {
             @Override
@@ -134,6 +144,7 @@ public class UserView {
                     String user_email = document.get("email").toString();
                     UserView temp_user = new UserView(user_name, user_role, user_id,user_email);
                     method.onSuccess(temp_user);
+                    // Generic exception catchers
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

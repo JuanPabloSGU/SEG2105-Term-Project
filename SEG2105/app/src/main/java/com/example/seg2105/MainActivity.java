@@ -36,11 +36,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSetSignUpButton(View view){
+        // sign up button which appears on main, all users able to access
+        // brings to SignUp.class
         Intent intent = new Intent(getApplicationContext(), SignUp.class);
         MainActivity.this.startActivity(intent);
     }
 
     public void onSetSignInButton(View view){
+        // sign in button for users with pre existing accounts to sign in
+        // brings to SignIn.class
         Intent intent = new Intent(getApplicationContext(), SignIn.class);
         MainActivity.this.startActivity(intent);
     }

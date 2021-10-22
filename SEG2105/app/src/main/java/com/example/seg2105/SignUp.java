@@ -40,6 +40,7 @@ public class SignUp extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        // Only instructor and member accounts can be created by normal users.
         instructor = findViewById(R.id.instructor_button);
         gymMember = findViewById(R.id.gymMember_button);
         signUp = findViewById(R.id.signup_button);
@@ -77,6 +78,7 @@ public class SignUp extends AppCompatActivity {
 
     Button instructor, gymMember, signUp;
 
+    // Sample demo user we used to test the program
     public void createDemoUser(){
         addUser("adam3", "adam3@databending.ca", "admin123", "instructor");
     }
@@ -92,8 +94,10 @@ public class SignUp extends AppCompatActivity {
                 break;
         }
         DocumentReference finalUser_role1 = finalUser_role;
+        // Creating user in FireBase with inputs from user
         mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
+            // After creating user, it adds user to FireBase
             public void onComplete(@NonNull Task<AuthResult> task) {
                 System.out.println("Created user successfully");
                 String user_id = task.getResult().getUser().getUid();

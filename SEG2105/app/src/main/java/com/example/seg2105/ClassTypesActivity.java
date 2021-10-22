@@ -73,10 +73,12 @@ public class ClassTypesActivity extends AppCompatActivity {
 
     }
 
+    // Sample demo class we used to test the program
     public void createDemoClassType(){
         ClassTypes.create(db, "whatever", "some class", "12",20);
     }
 
+    // Delete class by its id
     public void deleteClass(String id) {
         ClassTypes.delete(id);
     }
@@ -106,6 +108,7 @@ public class ClassTypesActivity extends AppCompatActivity {
         });
     }
 
+    // Loads all users to display to screen for admin
     public void loadUsers() throws ExecutionException, InterruptedException {
         System.out.println("loading users");
         ArrayList<ClassTypes> class_types = new ArrayList<ClassTypes>();
@@ -122,6 +125,7 @@ public class ClassTypesActivity extends AppCompatActivity {
             class_types.add(temp_class);
         }
 
+        // Prints all users to screen
         for(int i = 0; i < class_types.size(); i++){
             System.out.println("User name: " + class_types.get(i).name);
         }

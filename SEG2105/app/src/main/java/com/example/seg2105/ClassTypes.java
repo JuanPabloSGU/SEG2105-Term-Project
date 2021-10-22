@@ -25,6 +25,7 @@ public class ClassTypes {
         return this.name;
     }
 
+    // Admin can create classes using this constructor
     public static ClassTypes create(FirebaseFirestore db, String name, String description, String day, int capacity){
         Map<String, Object> data1 = new HashMap<>();
         data1.put("name", name);
@@ -35,6 +36,7 @@ public class ClassTypes {
         return new ClassTypes("", name, description, day, capacity);
     }
 
+    // Method used to delete existing classes
     public static void delete(String id){
         db.collection("class_types").document(id).delete();
     }
@@ -49,6 +51,7 @@ public class ClassTypes {
         ClassTypes.editClassDescriptionInternally(id, new_description);
     }
 
+    // Used for editing class description of self (stored in class variables)
     public void editClassDescription(String new_description){
         this.editClassDescriptionInternally(this.id, new_description);
     }

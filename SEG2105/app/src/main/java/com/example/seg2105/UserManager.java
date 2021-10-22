@@ -69,6 +69,7 @@ public class UserManager extends AppCompatActivity {
 
     }
 
+    // Sample demo user we used to test the programs
     public void createDemoUser(){
         UserView.createUser("adam3", "adam3@databending.ca", "admin123", "instructor");
     }

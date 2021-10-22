@@ -48,13 +48,15 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View v){
                 System.out.println(username.getText().toString() + ", " + password.getText().toString());
                 try {
+                    // Detects if attempting to sign in with e-mail or username or not, sends down
+                    // appropriate pathway to signing in with either.
                     if(username.getText().toString().indexOf('@') != -1){
                         System.out.println("using email sign in");
                         signIn(username.getText().toString(), password.getText().toString());
                     } else {
                         signInWithUsername(username.getText().toString(), password.getText().toString());
                     }
-
+                // Generic exception catchers
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -194,6 +196,7 @@ public class SignIn extends AppCompatActivity {
                                     }
 
                                 });
+                                // Catchers for common exceptions appear below
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
                             } catch (InterruptedException e) {
