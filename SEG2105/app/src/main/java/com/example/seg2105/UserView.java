@@ -109,6 +109,7 @@ public class UserView {
                     DocumentSnapshot role_task = Tasks.await(document.getDocumentReference("role").get());
                     String user_role = role_task.get("name").toString();
                     String user_id = document.get("user_id").toString();
+                    System.out.println(document);
                     String user_email = document.get("email").toString();
                     UserView temp_user = new UserView(username, user_role, user_id, user_email);
                     method.onSuccess(temp_user);

@@ -101,6 +101,7 @@ public class SignUp extends AppCompatActivity {
                 data1.put("user_id", user_id);
                 data1.put("username", user_name);
                 data1.put("role", finalUser_role1);
+                data1.put("email", user_email);
                 db.collection("users").add(data1);
             }
         });
