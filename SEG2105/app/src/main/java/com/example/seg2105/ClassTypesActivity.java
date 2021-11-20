@@ -72,25 +72,7 @@ public class ClassTypesActivity extends AppCompatActivity {
 
     // Loads all users to display to screen for admin
     public void loadUsers() throws ExecutionException, InterruptedException {
-        System.out.println("loading users");
-        ArrayList<ClassTypes> class_types = new ArrayList<ClassTypes>();
-
-        QuerySnapshot task = Tasks.await(db.collection("class_types").get());
-
-        for (DocumentSnapshot document : task.getDocuments()) {
-
-            String class_type_name = document.get("name").toString();
-            String class_type_description = document.get("description").toString();
-            String class_type_day = document.get("day").toString();
-            int class_type_capacity = Integer.parseInt(document.get("capacity").toString());
-            ClassTypes temp_class = new ClassTypes(document.getId(),class_type_name, class_type_description, class_type_day, class_type_capacity);
-            class_types.add(temp_class);
-        }
-
-        // Prints all users to screen
-        for(int i = 0; i < class_types.size(); i++){
-            System.out.println("User name: " + class_types.get(i).name);
-        }
+        ArrayList<ClassTypes> class_types = ClassTypes.getAllClassTypes();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

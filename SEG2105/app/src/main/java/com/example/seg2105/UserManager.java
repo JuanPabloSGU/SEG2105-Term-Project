@@ -60,25 +60,7 @@ public class UserManager extends AppCompatActivity {
     }
 
     public void loadUsers() throws ExecutionException, InterruptedException {
-        System.out.println("loading users");
-        ArrayList<UserView> users = new ArrayList<UserView>();
-
-        QuerySnapshot task = Tasks.await(db.collection("users").get());
-
-        for (DocumentSnapshot document : task.getDocuments()) {
-
-            DocumentSnapshot role_task = Tasks.await(document.getDocumentReference("role").get());
-            String user_name = document.get("username").toString();
-            String user_id = document.get("user_id").toString();
-            String user_role = role_task.get("name").toString();
-            String user_email = document.get("email").toString();
-            UserView temp_user = new UserView(user_name, user_role, user_id, user_email);
-            users.add(temp_user);
-        }
-
-        for(int i = 0; i < users.size(); i++){
-            System.out.println("User name: " + users.get(i).getUsername() + "Role : " + users.get(i).getRole());
-        }
+        ArrayList<UserView> users = UserView.getAllUsers();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

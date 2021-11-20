@@ -1,9 +1,14 @@
 package com.example.seg2105;
 
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class ClassTypes {
     private String id;
@@ -34,6 +39,24 @@ public class ClassTypes {
         data1.put("capacity", capacity);
         db.collection("class_types").add(data1);
         return new ClassTypes("", name, description, day, capacity);
+    }
+
+    public static ArrayList<ClassTypes> getAllClassTypes()  throws ExecutionException, InterruptedException {
+        System.out.println("loading all class types");
+        ArrayList<ClassTypes> class_types = new ArrayList<ClassTypes>();
+
+        QuerySnapshot task = Tasks.await(db.collection("class_types").get());
+
+        for (DocumentSnapshot document : task.getDocuments()) {
+
+            String class_type_name = document.get("name").toString();
+            String class_type_description = document.get("description").toString();
+            String class_type_day = document.get("day").toString();
+            int class_type_capacity = Integer.parseInt(document.get("capacity").toString());
+            ClassTypes temp_class = new ClassTypes(document.getId(), class_type_name, class_type_description, class_type_day, class_type_capacity);
+            class_types.add(temp_class);
+        }
+        return class_types;
     }
 
     // Method used to delete existing classes
