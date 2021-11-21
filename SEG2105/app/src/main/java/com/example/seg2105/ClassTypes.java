@@ -134,5 +134,5 @@ public class ClassTypes {
         System.out.println("INSTRUCTOR: "+ instructor.getUsername());
         return  new ClassTypes(document.getId(), class_type_name, class_type_description, class_type_day, class_type_capacity, instructor);
     }
-    
+
 }
