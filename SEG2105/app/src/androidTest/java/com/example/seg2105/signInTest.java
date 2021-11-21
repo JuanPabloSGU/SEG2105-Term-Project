@@ -23,8 +23,6 @@ public class signInTest {
 
     @Test
     public void adminSignIn() {
-
-        // Testing admin login information
         onView(withId(R.id.SignIn)).perform(click());
 
         // Input information
@@ -37,8 +35,6 @@ public class signInTest {
 
     @Test
     public void instructorSignIn() {
-
-        // Testing admin login information
         onView(withId(R.id.SignIn)).perform(click());
 
         // Input information
@@ -50,7 +46,6 @@ public class signInTest {
 
     @Test
     public void memberSignIn() {
-        // Testing admin login information
         onView(withId(R.id.SignIn)).perform(click());
 
         // Input information
