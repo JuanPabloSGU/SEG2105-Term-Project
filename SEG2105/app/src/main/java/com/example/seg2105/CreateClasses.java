@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class CreateClasses extends AppCompatActivity {
 
@@ -45,7 +46,15 @@ public class CreateClasses extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 int capacityOfTheClass = Integer.parseInt(capacityOfClass.getText().toString());
-                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass);
+                // THE USER ID PROVIDED IS FOR A PLACEHOLDER, PLEASE ADD FUNCTIONALITY IN THE UI
+                // SO THAT THE USER CAN CHOOSE WHO IS THE INSTRUCTOR FOR THAT CLASS
+                try {
+                    ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, "ZtmCiGzEX2XFkLPiqmySwGBlZqu2");
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

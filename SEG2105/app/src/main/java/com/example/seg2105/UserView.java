@@ -111,6 +111,20 @@ public class UserView {
         return users;
     }
 
+    public static UserView getUserByID(String user_id)  throws ExecutionException, InterruptedException {
+        ArrayList<UserView> users = new ArrayList<UserView>();
+
+        QuerySnapshot task = Tasks.await(db.collection("users").whereEqualTo("user_id", user_id).get());
+        DocumentSnapshot instructor_data = task.getDocuments().get(0);
+        DocumentSnapshot role_task = Tasks.await(instructor_data.getDocumentReference("role").get());
+        String user_name = instructor_data.get("username").toString();
+        String user_role = role_task.get("name").toString();
+        String user_email = instructor_data.get("email").toString();
+
+        return new UserView(user_name, user_role, user_id, user_email);
+    }
+
+
     // Method that grabs UserView class from FireBase for comparison when logging in. Uses username
     // to compare, and then later compares password credentials.
     public static void getUserByUsername(String username, GetUserInterface method) throws ExecutionException, InterruptedException, InvocationTargetException, IllegalAccessException {

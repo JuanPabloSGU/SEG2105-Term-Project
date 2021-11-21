@@ -1,6 +1,10 @@
 package com.example.seg2105;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -14,16 +18,19 @@ public class ClassTypes {
     private String id;
     public String name;
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
     public String description;
     public String day;
+    public UserView user;
     public int capacity;
 
-    public ClassTypes(String id, String name, String description, String day, int capacity) {
+    public ClassTypes(String id, String name, String description, String day, int capacity, UserView user) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.day = day;
         this.capacity = capacity;
+        this.user = user;
     }
 
     public String getType(){
@@ -31,18 +38,20 @@ public class ClassTypes {
     }
 
     // Admin can create classes using this constructor
-    public static ClassTypes create(FirebaseFirestore db, String name, String description, String day, int capacity){
+    public static ClassTypes create(FirebaseFirestore db, String name, String description, String day, int capacity, String user_id) throws ExecutionException, InterruptedException {
         Map<String, Object> data1 = new HashMap<>();
         data1.put("name", name);
         data1.put("description", description);
         data1.put("day", day);
         data1.put("capacity", capacity);
+        DocumentReference instructor_reference =  db.document("/roles/" + user_id);;
+        data1.put("instructor", instructor_reference);
         db.collection("class_types").add(data1);
-        return new ClassTypes("", name, description, day, capacity);
+        UserView instructor = UserView.getUserByID(user_id);
+        return new ClassTypes("", name, description, day,  capacity, instructor);
     }
 
     public static ArrayList<ClassTypes> getAllClassTypes()  throws ExecutionException, InterruptedException {
-        System.out.println("loading all class types");
         ArrayList<ClassTypes> class_types = new ArrayList<ClassTypes>();
 
         QuerySnapshot task = Tasks.await(db.collection("class_types").get());
@@ -52,8 +61,11 @@ public class ClassTypes {
             String class_type_name = document.get("name").toString();
             String class_type_description = document.get("description").toString();
             String class_type_day = document.get("day").toString();
+            DocumentSnapshot class_type_instructor_reference = Tasks.await(document.getDocumentReference("instructor").get());
+            String class_instructor = class_type_instructor_reference.get("user_id").toString();
             int class_type_capacity = Integer.parseInt(document.get("capacity").toString());
-            ClassTypes temp_class = new ClassTypes(document.getId(), class_type_name, class_type_description, class_type_day, class_type_capacity);
+            UserView instructor = UserView.getUserByID(class_instructor);
+            ClassTypes temp_class = new ClassTypes(document.getId(), class_type_name, class_type_description, class_type_day, class_type_capacity, instructor);
             class_types.add(temp_class);
         }
         return class_types;
