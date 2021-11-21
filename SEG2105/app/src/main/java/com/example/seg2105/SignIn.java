@@ -134,6 +134,7 @@ public class SignIn extends AppCompatActivity {
                                                     bundle.putString("Role", user.role);
                                                     bundle.putString("Name", user.getUsername());
                                                     intent.putExtras(bundle);
+                                                    UserView.setCurrentUser(user);
 
                                                     SignIn.this.startActivity(intent);
                                                 }

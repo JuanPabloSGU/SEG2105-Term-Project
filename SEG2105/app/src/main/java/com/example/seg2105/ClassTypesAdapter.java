@@ -46,7 +46,7 @@ public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.Vi
 
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
-        textView.setText(class_type.getType() + " : " + class_type.description);
+        textView.setText(class_type.getType() + " : " + class_type.description + " : " + class_type.user.getUsername());
         Button button = holder.deleteButton;
         button.setText("Delete");
         button.setOnClickListener(new View.OnClickListener() {

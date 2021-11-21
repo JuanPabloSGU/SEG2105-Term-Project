@@ -2,17 +2,16 @@ package com.example.seg2105;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class EditClasses extends AppCompatActivity {
 
+public class EditClasses extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_classes);
 
@@ -27,7 +26,7 @@ public class EditClasses extends AppCompatActivity {
                 Bundle bundle = getIntent().getExtras();
                 if(bundle != null){
                     String value = bundle.getString("classId");
-                    ClassTypes.editClassDescription(value, newEdit);
+                    ClassTypes.editClassDescription(value, newEdit, UserView.getCurrentUser());
                 }
 
             }
