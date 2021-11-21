@@ -37,7 +37,7 @@ public class instructorFunctionalityTest {
         }
     }
 
-    //@Test
+    @Test
     public void addClass() {
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
@@ -68,7 +68,7 @@ public class instructorFunctionalityTest {
         onView(Matchers.allOf(withContentDescription("Navigate up"), isDisplayed())).perform(click());
     }
 
-    //@Test
+    @Test
     public void viewClasses() {
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
@@ -111,9 +111,8 @@ public class instructorFunctionalityTest {
         timeout();
         timeout();
 
-        // this user will only be used in the unit tests. Thus, we can assume that all classes returned
-        // by this method will be created during the test or are no longer important
-        ArrayList<ClassTypes> class_types = ClassTypes.searchByInstructor("testInstructor");
+        // This will gather all of the classes and this won't delete the other classes
+        ArrayList<ClassTypes> class_types = ClassTypes.getAllClassTypes();
         for(ClassTypes class_type : class_types){
             class_type.delete();
         }
@@ -121,7 +120,31 @@ public class instructorFunctionalityTest {
     }
 
     @Test
-    public void deleteOurClasses() {
+    public void deleteOurClasses() throws ExecutionException, InterruptedException {
 
+        // Now seeing if our account was created
+        onView(withId(R.id.SignIn)).perform(click());
+
+        // Input information
+        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
+        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
+
+        onView(withId(R.id.login)).perform(click());
+        timeout();
+
+        onView(withId(R.id.cont)).perform(click());
+        timeout();
+
+        onView(withId(R.id.viewClasses)).perform(click());
+        timeout();
+        timeout();
+        timeout();
+
+        // This will gather all of the classes and this won't delete the other classes
+        // This should only delete the classes that the instructor has
+        ArrayList<ClassTypes> class_types = ClassTypes.searchByInstructor("testInstructor");
+        for(ClassTypes class_type : class_types){
+            class_type.delete();
+        }
     }
 }
