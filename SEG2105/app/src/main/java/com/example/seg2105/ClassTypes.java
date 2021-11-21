@@ -23,6 +23,7 @@ public class ClassTypes {
     public String day;
     public UserView user;
     public int capacity;
+    public static String username;
 
     public ClassTypes(String id, String name, String description, String day, int capacity, UserView user) {
         this.id = id;
@@ -39,12 +40,13 @@ public class ClassTypes {
 
     // Admin can create classes using this constructor
     public static ClassTypes create(FirebaseFirestore db, String name, String description, String day, int capacity, String user_id) throws ExecutionException, InterruptedException {
+        username=user_id;
         Map<String, Object> data1 = new HashMap<>();
         data1.put("name", name);
         data1.put("description", description);
         data1.put("day", day);
         data1.put("capacity", capacity);
-        UserView instructor = UserView.getUserByID(user_id);
+        UserView instructor = UserView.getUserByUsername(user_id);
         DocumentReference instructor_reference =  db.document("/users/" + instructor.id);
         data1.put("instructor", instructor_reference);
         db.collection("class_types").add(data1);

@@ -23,7 +23,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:ems="10"
-            android:hint="Please Enter Instructor ID"
+            android:hint="Please Enter Your Username"
             android:inputType="textPersonName"
             android:minHeight="48dp" />
 

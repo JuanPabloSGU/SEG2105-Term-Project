@@ -54,7 +54,7 @@ public class CreateClasses extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, "ZtmCiGzEX2XFkLPiqmySwGBlZqu2"); //userID.getText().toString()
+                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, userID.getText().toString());
 
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
