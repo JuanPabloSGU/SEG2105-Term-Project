@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 public class UserView {
     private String username;
+    public static UserView current_user;
     public String role;
     public String email;
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -205,6 +207,14 @@ public class UserView {
             }
         }).start();
 
+    }
+
+    public static void setCurrentUser(UserView user) {
+        UserView.current_user = user;
+    }
+
+    public static UserView getCurrentUser(){
+        return UserView.current_user;
     }
 
 }
