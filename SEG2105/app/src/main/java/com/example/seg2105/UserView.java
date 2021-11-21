@@ -119,8 +119,6 @@ public class UserView {
     }
 
     public static UserView getUserByID(String user_id)  throws ExecutionException, InterruptedException {
-        ArrayList<UserView> users = new ArrayList<UserView>();
-
         QuerySnapshot task = Tasks.await(db.collection("users").whereEqualTo("user_id", user_id).get());
         DocumentSnapshot instructor_data = task.getDocuments().get(0);
         DocumentSnapshot role_task = Tasks.await(instructor_data.getDocumentReference("role").get());
@@ -132,8 +130,6 @@ public class UserView {
     }
 
     public static UserView getUserByUsername(String user_id)  throws ExecutionException, InterruptedException {
-        ArrayList<UserView> users = new ArrayList<UserView>();
-
         QuerySnapshot task = Tasks.await(db.collection("users").whereEqualTo("username", user_id).get());
         DocumentSnapshot instructor_data = task.getDocuments().get(0);
         DocumentSnapshot role_task = Tasks.await(instructor_data.getDocumentReference("role").get());
