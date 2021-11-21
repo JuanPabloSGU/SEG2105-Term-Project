@@ -40,7 +40,7 @@ public class CreateClasses extends AppCompatActivity {
         EditText descriptionOfClass = (EditText) findViewById(R.id.descriptionClass);
         EditText dayOfClass = (EditText) findViewById(R.id.day);
         EditText capacityOfClass = (EditText) findViewById(R.id.capacity);
-        EditText userId = (EditText) findViewById(R.id.userID);
+        EditText userID = (EditText) findViewById(R.id.userID);
 
         createClassButton = findViewById(R.id.createClassButton);
         createClassButton.setOnClickListener(new View.OnClickListener() {
