@@ -109,15 +109,30 @@ public class ClassTypes {
         db.collection("class_types").document(id).update("description", new_description);
     }
 
-    public void checkClasses(String name, String description, String day, int capacity) throws ExecutionException, InterruptedException {
-        ArrayList<ClassTypes> allClasses = getAllClassTypes();
-        for(int i = 0; i < allClasses.size(); i++){
-            ClassTypes temp = allClasses.get(i);
-            if(temp.day.equals(day) && temp.name.equals(name)){
-                System.out.println("Class already scheduled for that day!");
-                //
-                break;
-            }
-        }
+    public static ClassTypes searchByInstructor(String instructor_username) throws ExecutionException, InterruptedException {
+        UserView instructor = UserView.getUserByUsername(instructor_username);
+        QuerySnapshot task = Tasks.await(db.collection("class_Types").whereEqualTo("instructor", "/users/"+instructor.id).get());
+        DocumentSnapshot document = task.getDocuments().get(0);
+        String class_type_name = document.get("name").toString();
+        String class_type_description = document.get("description").toString();
+        String class_type_day = document.get("day").toString();
+        int class_type_capacity = Integer.parseInt(document.get("capacity").toString());
+        return  new ClassTypes(document.getId(), class_type_name, class_type_description, class_type_day, class_type_capacity, instructor);
     }
+
+
+    public static ClassTypes searchByClassName(String class_name) throws ExecutionException, InterruptedException {
+        QuerySnapshot task = Tasks.await(db.collection("class_Types").whereEqualTo("name", class_name).get());
+        DocumentSnapshot document = task.getDocuments().get(0);
+        String class_type_name = document.get("name").toString();
+        String class_type_description = document.get("description").toString();
+        String class_type_day = document.get("day").toString();
+        DocumentSnapshot class_type_instructor_reference = Tasks.await(document.getDocumentReference("instructor").get());
+        String class_instructor = class_type_instructor_reference.get("user_id").toString();
+        int class_type_capacity = Integer.parseInt(document.get("capacity").toString());
+        UserView instructor = UserView.getUserByID(class_instructor);
+        System.out.println("INSTRUCTOR: "+ instructor.getUsername());
+        return  new ClassTypes(document.getId(), class_type_name, class_type_description, class_type_day, class_type_capacity, instructor);
+    }
+    
 }
