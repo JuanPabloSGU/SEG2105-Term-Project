@@ -20,6 +20,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.concurrent.ExecutionException;
+
 @RunWith(AndroidJUnit4.class)
 public class instructorFunctionalityTest {
 
@@ -88,7 +90,7 @@ public class instructorFunctionalityTest {
     }
 
     @Test
-    public void deleteOtherClasses() {
+    public void deleteOtherClasses() throws ExecutionException, InterruptedException {
 
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
@@ -107,7 +109,9 @@ public class instructorFunctionalityTest {
         timeout();
         timeout();
         timeout();
-        
+
+        ClassTypes.searchByInstructor("testInstructor");
+
     }
 
     @Test
