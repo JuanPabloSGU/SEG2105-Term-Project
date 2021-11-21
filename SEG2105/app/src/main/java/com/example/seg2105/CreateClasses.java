@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,24 +44,37 @@ public class CreateClasses extends AppCompatActivity {
         EditText capacityOfClass = (EditText) findViewById(R.id.capacity);
         EditText userID = (EditText) findViewById(R.id.userID);
 
+        /**Bundle bundle = getIntent().getExtras();
+        String userID_info = bundle.getString("Name");
+        userID.setText(userID_info); */
+
         createClassButton = findViewById(R.id.createClassButton);
         createClassButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v){
-                int capacityOfTheClass = Integer.parseInt(capacityOfClass.getText().toString());
                 // THE USER ID PROVIDED IS FOR A PLACEHOLDER, PLEASE ADD FUNCTIONALITY IN THE UI
                 // SO THAT THE USER CAN CHOOSE WHO IS THE INSTRUCTOR FOR THAT CLASS
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
+                                int capacityOfTheClass = Integer.parseInt(capacityOfClass.getText().toString());
+                                if(nameOfClass.getText().toString() == "" || descriptionOfClass.getText().toString() == "" || userID.getText().toString() == "" || capacityOfClass.getText().toString() == "" ){
+                                    throw new IllegalStateException();
+                                }
                                 ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, userID.getText().toString());
 
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
+                            } catch (IllegalStateException e ) {
+                                System.out.println("Invalid class inputs");
+                                Toast.makeText(CreateClasses.this, "Invalid Inputs for Class!.", Toast.LENGTH_SHORT).show();
+                            } catch (NumberFormatException e ){
+                                System.out.println("Invalid class inputs");
+                                Toast.makeText(CreateClasses.this, "Invalid Inputs for Class!.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }).start();

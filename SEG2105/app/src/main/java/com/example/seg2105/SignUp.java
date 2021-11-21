@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -68,9 +69,13 @@ public class SignUp extends AppCompatActivity {
                 EditText password = (EditText) findViewById(R.id.password);
 
                 System.out.println(username.getText().toString() + ", " + email.getText().toString() + ", " + password.getText().toString() + ", " + role);
-
-                addUser(username.getText().toString(), email.getText().toString(), password.getText().toString(), role);
-                System.out.println("User Created");
+                if (username.toString() == null || email.toString() == null || password.toString() == null){
+                    Toast.makeText(SignUp.this, "Input is null!.",
+                            Toast.LENGTH_SHORT).show();
+                }else {
+                    addUser(username.getText().toString(), email.getText().toString(), password.getText().toString(), role);
+                    System.out.println("User Created");
+                }
             }
         });
 
