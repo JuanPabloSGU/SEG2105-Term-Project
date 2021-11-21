@@ -20,6 +20,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 @RunWith(AndroidJUnit4.class)
@@ -110,7 +111,12 @@ public class instructorFunctionalityTest {
         timeout();
         timeout();
 
-        ClassTypes.searchByInstructor("testInstructor");
+        // this user will only be used in the unit tests. Thus, we can assume that all classes returned
+        // by this method will be created during the test or are no longer important
+        ArrayList<ClassTypes> class_types = ClassTypes.searchByInstructor("testInstructor");
+        for(ClassTypes class_type : class_types){
+            class_type.delete();
+        }
 
     }
 
