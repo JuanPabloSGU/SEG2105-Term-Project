@@ -110,15 +110,4 @@ public class ClassTypes {
         db.collection("class_types").document(id).update("description", new_description);
     }
 
-    public void checkClasses(String name, String description, String day, int capacity) throws ExecutionException, InterruptedException {
-        ArrayList<ClassTypes> allClasses = getAllClassTypes();
-        for(int i = 0; i < allClasses.size(); i++){
-            ClassTypes temp = allClasses.get(i);
-            if(temp.day.equals(day) && temp.name.equals(name)){
-                System.out.println("Class already scheduled for that day!");
-                //
-                break;
-            }
-        }
-    }
 }
