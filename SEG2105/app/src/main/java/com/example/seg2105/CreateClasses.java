@@ -62,7 +62,7 @@ public class CreateClasses extends AppCompatActivity {
                                 if(dayOfClass.toString().equals("-1") || capacityOfTheClass < 0){
                                     throw new IllegalStateException();
                                 }
-                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, userID.getText().toString()); //userID.getText().toString()
+                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, userID.getText().toString());
 
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
