@@ -134,17 +134,5 @@ public class ClassTypes {
         System.out.println("INSTRUCTOR: "+ instructor.getUsername());
         return  new ClassTypes(document.getId(), class_type_name, class_type_description, class_type_day, class_type_capacity, instructor);
     }
-
-
-    public void checkClasses(String name, String description, String day, int capacity) throws ExecutionException, InterruptedException {
-        ArrayList<ClassTypes> allClasses = getAllClassTypes();
-        for(int i = 0; i < allClasses.size(); i++){
-            ClassTypes temp = allClasses.get(i);
-            if(temp.day.equals(day) && temp.name.equals(name)){
-                System.out.println("Class already scheduled for that day!");
-                //
-                break;
-            }
-        }
-    }
+    
 }
