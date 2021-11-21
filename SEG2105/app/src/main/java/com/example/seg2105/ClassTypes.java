@@ -44,10 +44,11 @@ public class ClassTypes {
         data1.put("description", description);
         data1.put("day", day);
         data1.put("capacity", capacity);
-        DocumentReference instructor_reference =  db.document("/roles/" + user_id);;
+        UserView instructor = UserView.getUserByID(user_id);
+        DocumentReference instructor_reference =  db.document("/users/" + instructor.id);
         data1.put("instructor", instructor_reference);
         db.collection("class_types").add(data1);
-        UserView instructor = UserView.getUserByID(user_id);
+
         return new ClassTypes("", name, description, day,  capacity, instructor);
     }
 
