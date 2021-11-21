@@ -1,5 +1,7 @@
 package com.example.seg2105;
 
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +23,7 @@ public class ClassTypes {
     private FirebaseAuth mAuth;
     public String description;
     public String day;
-    public UserView user;
+    public static UserView user;
     public int capacity;
     public static String username;
 
@@ -40,7 +42,6 @@ public class ClassTypes {
 
     // Admin can create classes using this constructor
     public static ClassTypes create(FirebaseFirestore db, String name, String description, String day, int capacity, String user_id) throws ExecutionException, InterruptedException {
-        username=user_id;
         Map<String, Object> data1 = new HashMap<>();
         data1.put("name", name);
         data1.put("description", description);
@@ -79,14 +80,24 @@ public class ClassTypes {
         db.collection("class_types").document(id).delete();
     }
     public void delete(){
-        db.collection("class_types").document(this.id).delete();
-        System.out.println("Successfully deleted");
+        if(user.getUsername().equals(WelcomePage.getCurrentUser()) || user.getRole().equals("admin")) {
+            db.collection("class_types").document(this.id).delete();
+            System.out.println("Successfully deleted");
+        }
+        else{
+            System.out.println("Cant delete");
+        }
     }
     public String getId(){
         return this.id;
     }
     public static void editClassDescription(String id, String new_description){
-        ClassTypes.editClassDescriptionInternally(id, new_description);
+        if(user.getUsername().equals(WelcomePage.getCurrentUser()) || user.getRole().equals("admin")) {
+            ClassTypes.editClassDescriptionInternally(id, new_description);
+        }
+        else{
+            System.out.println("Cant edit");
+        }
     }
 
     // Used for editing class description of self (stored in class variables)

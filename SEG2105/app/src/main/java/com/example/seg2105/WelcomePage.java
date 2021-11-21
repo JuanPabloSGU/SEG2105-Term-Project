@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 public class WelcomePage extends AppCompatActivity {
     String userRoleInformation;
+    static String userInformation;
     TextView userInfo, userRole;
     Button cont;
     @Override
@@ -23,7 +24,7 @@ public class WelcomePage extends AppCompatActivity {
         userRole = findViewById(R.id.user_role_info);
 
         Bundle bundle = getIntent().getExtras();
-        String userInformation = bundle.getString("Name");
+        userInformation = bundle.getString("Name");
         userRoleInformation = bundle.getString("Role");
 
         userInfo.setText(userInformation);
@@ -45,6 +46,9 @@ public class WelcomePage extends AppCompatActivity {
 
             }
         });
+    }
+    public static String getCurrentUser(){
+        return userInformation;
     }
 
 
