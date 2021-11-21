@@ -43,6 +43,7 @@ public class ClassTypes {
     // Admin can create classes using this constructor
     public static ClassTypes create(FirebaseFirestore db, String name, String description, String day, int capacity, String user_id) throws ExecutionException, InterruptedException {
         username=user_id;
+        // checkClasses();
         Map<String, Object> data1 = new HashMap<>();
         data1.put("name", name);
         data1.put("description", description);
@@ -106,6 +107,7 @@ public class ClassTypes {
             if(temp.day.equals(day) && temp.name.equals(name)){
                 System.out.println("Class already scheduled for that day!");
                 //
+                break;
             }
         }
     }
