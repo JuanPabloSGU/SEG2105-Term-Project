@@ -32,11 +32,13 @@ public class UserView {
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static FirebaseAuth mAuth =  FirebaseAuth.getInstance();;
     public String id;
+    public String user_id;
 
-    public UserView(String username, String role, String id, String email){ // Generic constructor
+    public UserView(String username, String role, String user_id, String email, String id){ // Generic constructor
         this.username = username;
         this.email = email;
         this.role = role;
+        this.user_id = user_id;
         this.id = id;
     }
 
@@ -60,10 +62,12 @@ public class UserView {
         }
         DocumentReference finalUser_role1 = finalUser_role;
         final String[] user_id = new String[1];
+        final String[] new_user_id = new String[1];
         // Creating user in FireBase with inputs from user
         mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             // After creating user, it adds user to FireBase
+
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     System.out.println("Created user successfully");
@@ -72,7 +76,8 @@ public class UserView {
                     data1.put("user_id", user_id[0]);
                     data1.put("username", username);
                     data1.put("role", finalUser_role1);
-                    db.collection("users").add(data1);
+                    Task<DocumentReference> inserted_user = db.collection("users").add(data1);
+                    new_user_id[0] = inserted_user.getResult().getId();
                     if(cb[0] != null){
                         cb[0].onSuccess(task);
                     }
@@ -85,7 +90,7 @@ public class UserView {
             }
         });
 
-        return new UserView(username, user_role, user_id[0], user_email);
+        return new UserView(username, user_role, user_id[0], user_email, new_user_id[0]);
 
     }
 
@@ -105,7 +110,7 @@ public class UserView {
             String user_id = document.get("user_id").toString();
             String user_role = role_task.get("name").toString();
             String user_email = document.get("email").toString();
-            UserView temp_user = new UserView(user_name, user_role, user_id, user_email);
+            UserView temp_user = new UserView(user_name, user_role, user_id, user_email, document.getId());
             users.add(temp_user);
         }
         return users;
@@ -121,7 +126,7 @@ public class UserView {
         String user_role = role_task.get("name").toString();
         String user_email = instructor_data.get("email").toString();
 
-        return new UserView(user_name, user_role, user_id, user_email);
+        return new UserView(user_name, user_role, user_id, user_email, instructor_data.getId());
     }
 
 
@@ -143,7 +148,8 @@ public class UserView {
                     String user_id = document.get("user_id").toString();
                     System.out.println(document);
                     String user_email = document.get("email").toString();
-                    UserView temp_user = new UserView(username, user_role, user_id, user_email);
+                    String id = document.getId();
+                    UserView temp_user = new UserView(username, user_role, user_id, user_email, id);
                     method.onSuccess(temp_user);
                     // Generic exception catchers
                 } catch (ExecutionException e) {
@@ -175,7 +181,7 @@ public class UserView {
                     String user_name = document.get("username").toString();
                     String user_role = role_task.get("name").toString();
                     String user_email = document.get("email").toString();
-                    UserView temp_user = new UserView(user_name, user_role, user_id,user_email);
+                    UserView temp_user = new UserView(user_name, user_role, user_id,user_email, document.getId());
                     method.onSuccess(temp_user);
                     // Generic exception catchers
                 } catch (ExecutionException e) {
