@@ -27,7 +27,7 @@ public class InstrPage extends AppCompatActivity {
         viewClass.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(InstrPage.this, ClassTypes.class);
+                Intent intent = new Intent(InstrPage.this, ClassTypesActivity.class);
                 InstrPage.this.startActivity(intent);
             }
         });
