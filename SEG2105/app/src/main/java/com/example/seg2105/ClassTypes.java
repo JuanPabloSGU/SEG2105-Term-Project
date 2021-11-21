@@ -23,9 +23,8 @@ public class ClassTypes {
     private FirebaseAuth mAuth;
     public String description;
     public String day;
-    public static UserView user;
+    public UserView user;
     public int capacity;
-    public static String username;
 
     public ClassTypes(String id, String name, String description, String day, int capacity, UserView user) {
         this.id = id;
@@ -42,7 +41,6 @@ public class ClassTypes {
 
     // Admin can create classes using this constructor
     public static ClassTypes create(FirebaseFirestore db, String name, String description, String day, int capacity, String user_id) throws ExecutionException, InterruptedException {
-        username=user_id;
         // checkClasses();
         Map<String, Object> data1 = new HashMap<>();
         data1.put("name", name);
@@ -71,6 +69,7 @@ public class ClassTypes {
             String class_instructor = class_type_instructor_reference.get("user_id").toString();
             int class_type_capacity = Integer.parseInt(document.get("capacity").toString());
             UserView instructor = UserView.getUserByID(class_instructor);
+            System.out.println("INSTRUCTOR: "+ instructor.getUsername());
             ClassTypes temp_class = new ClassTypes(document.getId(), class_type_name, class_type_description, class_type_day, class_type_capacity, instructor);
             class_types.add(temp_class);
         }
@@ -93,7 +92,7 @@ public class ClassTypes {
     public String getId(){
         return this.id;
     }
-    public static void editClassDescription(String id, String new_description){
+    public static void editClassDescription(String id, String new_description, UserView user){
         if(user.getUsername().equals(WelcomePage.getCurrentUser()) || user.getRole().equals("admin")) {
             ClassTypes.editClassDescriptionInternally(id, new_description);
         }

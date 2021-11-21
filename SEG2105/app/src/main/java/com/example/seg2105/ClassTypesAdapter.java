@@ -43,10 +43,11 @@ public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.Vi
     public void onBindViewHolder(ClassTypesAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
         ClassTypes class_type = user_list.get(position);
-
+        String username = class_type.user.getUsername();
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
-        textView.setText(class_type.getType() + " : " + class_type.description);
+
+        textView.setText(class_type.getType() + " : " + class_type.description+" : "+username);
         Button button = holder.deleteButton;
         button.setText("Delete");
         button.setOnClickListener(new View.OnClickListener() {
