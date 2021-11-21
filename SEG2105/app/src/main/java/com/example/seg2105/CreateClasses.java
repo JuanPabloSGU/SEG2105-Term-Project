@@ -26,6 +26,7 @@ public class CreateClasses extends AppCompatActivity {
     EditText descriptionOfClass;
     EditText dayOfClass;
     EditText capacityOfClass;
+    EditText userID;
     Button createClassButton;
 
     @Override
@@ -39,6 +40,7 @@ public class CreateClasses extends AppCompatActivity {
         EditText descriptionOfClass = (EditText) findViewById(R.id.descriptionClass);
         EditText dayOfClass = (EditText) findViewById(R.id.day);
         EditText capacityOfClass = (EditText) findViewById(R.id.capacity);
+        EditText userId = (EditText) findViewById(R.id.userID);
 
         createClassButton = findViewById(R.id.createClassButton);
         createClassButton.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +54,7 @@ public class CreateClasses extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, "ZtmCiGzEX2XFkLPiqmySwGBlZqu2");
+                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, "ZtmCiGzEX2XFkLPiqmySwGBlZqu2"); //userID.getText().toString()
 
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
