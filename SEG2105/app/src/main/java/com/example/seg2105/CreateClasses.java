@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +43,10 @@ public class CreateClasses extends AppCompatActivity {
         EditText capacityOfClass = (EditText) findViewById(R.id.capacity);
         EditText userID = (EditText) findViewById(R.id.userID);
 
+        /**Bundle bundle = getIntent().getExtras();
+        String userID_info = bundle.getString("Name");
+        userID.setText(userID_info); */
+
         createClassButton = findViewById(R.id.createClassButton);
         createClassButton.setOnClickListener(new View.OnClickListener() {
 
@@ -54,12 +59,18 @@ public class CreateClasses extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, "ZtmCiGzEX2XFkLPiqmySwGBlZqu2"); //userID.getText().toString()
+                                if(dayOfClass.toString().equals("-1") || capacityOfTheClass < 0){
+                                    throw new IllegalStateException();
+                                }
+                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, userID.getText().toString()); //userID.getText().toString()
 
                             } catch (ExecutionException e) {
                                 e.printStackTrace();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
+                            } catch (IllegalStateException e) {
+                                System.out.println("Invalid class inputs");
+
                             }
                         }
                     }).start();

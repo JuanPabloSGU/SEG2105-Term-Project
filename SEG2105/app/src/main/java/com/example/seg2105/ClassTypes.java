@@ -1,5 +1,7 @@
 package com.example.seg2105;
 
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
@@ -39,6 +41,7 @@ public class ClassTypes {
 
     // Admin can create classes using this constructor
     public static ClassTypes create(FirebaseFirestore db, String name, String description, String day, int capacity, String user_id) throws ExecutionException, InterruptedException {
+        // checkClasses(name, description, day, capacity);
         Map<String, Object> data1 = new HashMap<>();
         data1.put("name", name);
         data1.put("description", description);
@@ -93,5 +96,16 @@ public class ClassTypes {
     }
     private static void editClassDescriptionInternally(String id, String new_description){
         db.collection("class_types").document(id).update("description", new_description);
+    }
+
+    public void checkClasses(String name, String description, String day, int capacity) throws ExecutionException, InterruptedException {
+        ArrayList<ClassTypes> allClasses = getAllClassTypes();
+        for(int i = 0; i < allClasses.size(); i++){
+            ClassTypes temp = allClasses.get(i);
+            if(temp.day.equals(day) && temp.name.equals(name)){
+                System.out.println("Class already scheduled for that day!");
+                //
+            }
+        }
     }
 }
