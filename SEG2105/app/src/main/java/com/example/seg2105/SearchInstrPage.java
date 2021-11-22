@@ -40,6 +40,10 @@ public class SearchInstrPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SearchInstrPage.this, SearchViewPage.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("search_page", "instructor");
+                bundle.putString("search_page_instructor_username", ((Spinner) findViewById(R.id.spinnerInstr)).getSelectedItem().toString());
+                intent.putExtras(bundle);
                 SearchInstrPage.this.startActivity(intent);
             }
         });

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/SearchView"
+        android:id="@+id/search_recycler_view"
         android:layout_width="409dp"
         android:layout_height="601dp"
         tools:layout_editor_absoluteX="1dp"

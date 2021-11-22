@@ -3,6 +3,7 @@ package com.example.seg2105;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 // The instructor Page from the instr page xml
@@ -68,6 +69,9 @@ public class InstrPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(InstrPage.this, SearchViewPage.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("search_page", "all");
+                intent.putExtras(bundle);
                 InstrPage.this.startActivity(intent);
             }
         });

@@ -2,6 +2,7 @@ package com.example.seg2105;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,18 +47,38 @@ public class SearchViewPage extends AppCompatActivity {
     }
 
     public void loadUsers() throws ExecutionException, InterruptedException {
-        ArrayList<UserView> users = UserView.getAllUsers();
+        ArrayList<ScheduledClass> classes;
+        Bundle bundle = getIntent().getExtras();
+        String which_page = bundle.getString("search_page");
+        if(which_page.equals("all")) {
+            classes = ScheduledClass.getAllScheduledClasses();
+        }
+        else if(which_page.equals("instructor")) {
+            classes = ScheduledClass.searchByInstructorUsername(bundle.getString("search_page_instructor_username"));
+        }
+        else if(which_page.equals("class_type")) {
+            classes = ScheduledClass.searchByClassTypeName(bundle.getString("search_page_class_type_name"));
+        } else {
+            classes = ScheduledClass.getAllScheduledClasses();
+        }
+        runOnUiThread(new Runnable() { // pop up of class successfully created
+            @Override
+            public void run() {
+                Toast.makeText(SearchViewPage.this, "Found " + classes.size() + " results", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
 //
 //                // Lookup the recyclerview in activity layout
-                RecyclerView rvContacts = (RecyclerView) findViewById(R.id.user_recycler_view);
+                RecyclerView rvContacts = (RecyclerView) findViewById(R.id.search_recycler_view);
 //
 //                // Initialize contacts
 //                // Create adapter passing in the sample user data
-                UserManagerAdapter adapter = new UserManagerAdapter(users);
+                SearchPageAdapter adapter = new SearchPageAdapter(classes);
 //                // Attach the adapter to the recyclerview to populate items
                 rvContacts.setAdapter(adapter);
 //                // Set layout manager to position the items

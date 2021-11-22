@@ -42,6 +42,10 @@ public class SearchClassNamePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SearchClassNamePage.this, SearchViewPage.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("search_page", "class_type");
+                bundle.putString("search_page_class_type_name", ((Spinner) findViewById(R.id.spinnerClass)).getSelectedItem().toString());
+                intent.putExtras(bundle);
                 SearchClassNamePage.this.startActivity(intent);
             }
         });

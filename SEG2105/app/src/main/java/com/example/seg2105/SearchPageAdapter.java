@@ -15,9 +15,9 @@ import java.util.List;
 
     public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.SearchPageAdapter.ViewHolder> {
 
-        private List<UserView> user_list;
+        private List<ScheduledClass> user_list;
         //contains a list of all the current users
-        public SearchPageAdapter(List<UserView> user_list) {
+        public SearchPageAdapter(List<ScheduledClass> user_list) {
             this.user_list = user_list;
         }
 
@@ -40,11 +40,11 @@ import java.util.List;
         @Override
         public void onBindViewHolder(com.example.seg2105.SearchPageAdapter.ViewHolder holder, int position) {
             // Get the data model based on position
-            UserView user = user_list.get(position);
+            ScheduledClass scheduledClass = user_list.get(position);
 
             // Set item views based on your views and data model
             TextView textView = holder.nameTextView;
-            textView.setText("Username : " + user.getUsername() + ", Role : " + user.getRole());
+            textView.setText("Class Type : " + scheduledClass.class_type.name + ", Instructor : " + scheduledClass.instructor.getUsername() + ", Day of the week: " + scheduledClass.day_of_the_week);
             Button button = holder.deleteButton;
             button.setText("Delete");
         }

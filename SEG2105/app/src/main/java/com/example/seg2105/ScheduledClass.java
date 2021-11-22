@@ -113,7 +113,7 @@ public class ScheduledClass {
     // returns a list of all schedule classes under a instructors username
     public static ArrayList<ScheduledClass> searchByInstructorUsername(String instructor_username) throws ExecutionException, InterruptedException {
         UserView instructor = UserView.getUserByUsername(instructor_username);
-        DocumentReference ref = db.document("users" + instructor.id);
+        DocumentReference ref = db.document("/users/" + instructor.id);
         QuerySnapshot task = Tasks.await(db.collection("scheduled_classes").whereEqualTo("instructor", ref).get());
         ArrayList<ScheduledClass> class_list = new ArrayList<ScheduledClass>();
         for (DocumentSnapshot document : task.getDocuments()) {
