@@ -174,8 +174,6 @@ public class UserView {
                     ArrayList<UserView> users = new ArrayList<UserView>();
 
                     QuerySnapshot task = Tasks.await(db.collection("users").whereEqualTo("username", username).get());
-
-
                     DocumentSnapshot document = task.getDocuments().get(0);
                     DocumentSnapshot role_task = Tasks.await(document.getDocumentReference("role").get());
                     String user_role = role_task.get("name").toString();
