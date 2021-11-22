@@ -23,13 +23,18 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="New Description"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <Button
             android:id="@+id/confirmText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm Changes" />
+            android:text="Confirm Changes"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="50dp"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
