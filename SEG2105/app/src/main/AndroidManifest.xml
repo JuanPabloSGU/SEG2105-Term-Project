@@ -68,6 +68,13 @@
             android:name=".SearchInstrPage"
             android:exported="false"
             android:parentActivityName=".InstrPage"/>
+        <activity
+            android:name=".SearchViewPage"
+            android:exported="false"
+            android:parentActivityName=".SearchClassNamePage"
+            />
+
+
 
     </application>
 

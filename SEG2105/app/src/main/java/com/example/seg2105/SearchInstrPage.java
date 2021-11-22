@@ -1,7 +1,9 @@
 package com.example.seg2105;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -32,6 +34,15 @@ public class SearchInstrPage extends AppCompatActivity {
                 }
             }
         }).start();
+
+        View search_button = findViewById(R.id.SearchInstr);
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchInstrPage.this, SearchViewPage.class);
+                SearchInstrPage.this.startActivity(intent);
+            }
+        });
     }
 
 

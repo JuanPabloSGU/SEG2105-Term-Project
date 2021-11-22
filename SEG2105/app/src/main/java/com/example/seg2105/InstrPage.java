@@ -62,5 +62,14 @@ public class InstrPage extends AppCompatActivity {
                 InstrPage.this.startActivity(intent);
             }
         });
+
+        View search_all_button = findViewById(R.id.SearchAll);
+        search_all_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(InstrPage.this, SearchViewPage.class);
+                InstrPage.this.startActivity(intent);
+            }
+        });
     }
 }
