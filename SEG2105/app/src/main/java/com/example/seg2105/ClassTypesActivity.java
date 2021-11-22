@@ -36,14 +36,14 @@ public class ClassTypesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         temp_this = this;
         super.onCreate(savedInstanceState);
-
+        // background Class types page
         setContentView(R.layout.activity_class_types);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         View create_class_type = findViewById(R.id.create_class_button);
-
+        // sends the button clicked to CreateClasses, where classes are actually made
         create_class_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,7 +52,7 @@ public class ClassTypesActivity extends AppCompatActivity {
                 ClassTypesActivity.this.startActivity(intent);
             }
         });
-
+        // printing to terminal
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -70,7 +70,7 @@ public class ClassTypesActivity extends AppCompatActivity {
 
     }
 
-    // Loads all users to display to screen for admin
+    // Loads all classes to display to screen for admin
     public void loadUsers() throws ExecutionException, InterruptedException {
         ArrayList<ClassType> class_types = ClassType.getAllClassTypes();
         runOnUiThread(new Runnable() {

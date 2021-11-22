@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
+// Create Classes Pages for
 public class CreateClasses extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -32,7 +32,7 @@ public class CreateClasses extends AppCompatActivity {
     EditText userID;
     Button createClassButton;
 
-    @Override
+    @Override // creates edit texts for the name of the class, the description of the class, the day of the class, and the capacity of the class, and the ID of the user
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_classes);
@@ -47,15 +47,13 @@ public class CreateClasses extends AppCompatActivity {
 
         createClassButton = findViewById(R.id.createClassButton);
         createClassButton.setOnClickListener(new View.OnClickListener() {
-
+        // when the create a new class button is pressed.
             @Override
             public void onClick(View v) {
-                // THE USER ID PROVIDED IS FOR A PLACEHOLDER, PLEASE ADD FUNCTIONALITY IN THE UI
-                // SO THAT THE USER CAN CHOOSE WHO IS THE INSTRUCTOR FOR THAT CLASS
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
+                        try { // throws if nothing is submitted
                             int capacityOfTheClass = Integer.parseInt(capacityOfClass.getText().toString());
                             if (nameOfClass.getText().toString() == "" || descriptionOfClass.getText().toString() == "" || userID.getText().toString() == "" || capacityOfClass.getText().toString() == "") {
                                 throw new IllegalStateException();
@@ -70,7 +68,7 @@ public class CreateClasses extends AppCompatActivity {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-                        } catch (IllegalStateException e) {
+                        } catch (IllegalStateException e) { // pop ups for the class inputs
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -93,7 +91,7 @@ public class CreateClasses extends AppCompatActivity {
             }
         });
     }
-
+    // checks classes to see if any have the same day and same type of class
     public boolean checkClasses( String name ,  String day) {
         boolean flag = true;
         ArrayList<ClassTypes> allClasses = null;
