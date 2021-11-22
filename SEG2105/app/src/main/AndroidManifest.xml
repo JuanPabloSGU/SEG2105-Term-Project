@@ -68,6 +68,7 @@
             android:name=".SearchInstrPage"
             android:exported="false"
             android:parentActivityName=".InstrPage"/>
+
     </application>
 
 </manifest>

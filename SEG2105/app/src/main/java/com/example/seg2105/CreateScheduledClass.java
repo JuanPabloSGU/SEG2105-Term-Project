@@ -87,14 +87,13 @@ public class CreateScheduledClass extends AppCompatActivity {
 
         View createClassButton = findViewById(R.id.createScheduledClassButton);
         createClassButton.setOnClickListener(new View.OnClickListener() {
-
+        // on Click of the "create a new class" button
             @Override
             public void onClick(View v) {
                 String class_name = ((Spinner) findViewById(R.id.spinner3)).getSelectedItem().toString();
 
                 Integer capacityOfClass =  Integer.parseInt(((EditText) findViewById(R.id.capacity)).getText().toString());
-                // THE USER ID PROVIDED IS FOR A PLACEHOLDER, PLEASE ADD FUNCTIONALITY IN THE UI
-                // SO THAT THE USER CAN CHOOSE WHO IS THE INSTRUCTOR FOR THAT CLASS
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -102,7 +101,7 @@ public class CreateScheduledClass extends AppCompatActivity {
                         customCallback cb = new customCallback() {
                             @Override
                             public void onSuccess() {
-                                runOnUiThread(new Runnable() {
+                                runOnUiThread(new Runnable() { // pop up of class successfully created
                                     @Override
                                     public void run() {
                                         Toast.makeText(CreateScheduledClass.this, "Class created!", Toast.LENGTH_SHORT).show();
@@ -119,7 +118,7 @@ public class CreateScheduledClass extends AppCompatActivity {
                             public void onError(Exception err) {
 
                             }
-
+                            // pop up for error
                             @Override
                             public void onError(String err) {
                                 runOnUiThread(new Runnable() {
@@ -131,11 +130,12 @@ public class CreateScheduledClass extends AppCompatActivity {
                                 });
                             }
                         };
+                        // prints the class type to the terminal
                         try {
                             System.out.println("CLASS NAME: " + class_name);
                             System.out.println("CURRENT USER ID: " + current_user.id);
                             ClassType class_type = ClassType.searchByClassName(class_name);
-                            ScheduledClass.create(day_of_the_week,capacityOfClass, difficulty,current_user,class_type, cb);
+                            ScheduledClass.create(day_of_the_week,capacityOfClass, difficulty,current_user,class_type, cb); // creates the class
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
@@ -147,15 +147,15 @@ public class CreateScheduledClass extends AppCompatActivity {
             }
         });
     }
-
+    // Loads all the class types names and put them into the spinner
     public void loadClassTypes(Context context) throws ExecutionException, InterruptedException {
-
+        //pulls all the class types
         ArrayList<ClassType> class_types = ClassType.getAllClassTypes();
 
 
         runOnUiThread(new Runnable() {
             @Override
-            public void run() {
+            public void run() { //puts the names into another arraylist
                 ArrayList<String> class_types_name = new ArrayList<String>();
                 for(ClassType class_type : class_types){
                     class_types_name.add(class_type.name);
