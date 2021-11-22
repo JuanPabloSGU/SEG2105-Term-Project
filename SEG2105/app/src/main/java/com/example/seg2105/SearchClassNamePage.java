@@ -48,7 +48,7 @@ public class SearchClassNamePage extends AppCompatActivity {
                 for (ClassType class_type : class_types) {
                     class_types_name.add(class_type.name);
                 }
-                Spinner spinner = (Spinner) findViewById(R.id.spinner3);
+                Spinner spinner = (Spinner) findViewById(R.id.spinnerClass);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, class_types_name);
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

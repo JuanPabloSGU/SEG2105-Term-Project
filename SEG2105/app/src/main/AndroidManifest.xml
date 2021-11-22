@@ -60,6 +60,14 @@
             android:name=".InstrPage"
             android:exported="false"
             android:parentActivityName=".WelcomePage" />
+        <activity
+            android:name=".SearchClassNamePage"
+            android:exported="false"
+            android:parentActivityName=".InstrPage"/>
+        <activity
+            android:name=".SearchInstrPage"
+            android:exported="false"
+            android:parentActivityName=".InstrPage"/>
     </application>
 
 </manifest>
