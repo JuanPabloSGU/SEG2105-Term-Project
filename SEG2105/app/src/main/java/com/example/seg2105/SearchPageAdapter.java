@@ -7,14 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
-    public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.SearchPageAdapter.ViewHolder> {
+public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.SearchPageAdapter.ViewHolder> {
 
         private List<ScheduledClass> user_list;
         //contains a list of all the current users
@@ -48,12 +53,42 @@ import java.util.List;
             textView.setText("Class Type : " + scheduledClass.class_type.name + ", Instructor : " + scheduledClass.instructor.getUsername() + ", Day of the week: " + scheduledClass.day_of_the_week);
             Button button = holder.deleteButton;
             button.setText("Delete");
-          //  button.setOnClickListener(new View.OnClickListener() {
-         //    @Override
-           // public void onClick(View view) {
-           //     scheduledClass.delete();
-          //  };
-       // });
+            button.setOnClickListener(new View.OnClickListener() {
+             @Override
+            public void onClick(View view) {
+                 customCallback cb = new customCallback() {
+
+
+                     @Override
+                     public void onSuccess() {
+                         Toast.makeText(view.getContext(), "Class successfully deleted!", Toast.LENGTH_SHORT).show();
+
+                     }
+
+                     @Override
+                     public void onSuccess(Task<AuthResult> task) {
+
+                     }
+
+                     @Override
+                     public void onError(Exception err) {
+
+                     }
+                     // pop up for error
+                     @Override
+                     public void onError(String err) {
+                         Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
+                     }
+                 };
+                 try {
+                     scheduledClass.delete(cb);
+                 } catch (ExecutionException e) {
+                     e.printStackTrace();
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+             };
+        });
         }
 
         // Returns the total count of items in the list

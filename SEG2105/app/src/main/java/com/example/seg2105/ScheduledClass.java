@@ -102,7 +102,7 @@ public class ScheduledClass {
     }
     // internally deletes a schedule class from the database
     private static void internalDelete(ScheduledClass scheduled_class_to_delete, customCallback cb){
-        if(scheduled_class_to_delete.instructor.equals(UserView.getCurrentUser())){
+        if(scheduled_class_to_delete.instructor.id.equals(UserView.getCurrentUser().id)){
             db.collection("scheduled_classes").document(scheduled_class_to_delete.id).delete();
             cb.onSuccess();
         } else {
