@@ -26,15 +26,6 @@ public class InstrPage extends AppCompatActivity {
             }
         });
 
-        View viewClass = findViewById(R.id.viewClasses);
-        viewClass.setOnClickListener(new View.OnClickListener(){ // goes to the ClassTypesActivity Page
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(InstrPage.this, ClassTypesActivity.class);
-                InstrPage.this.startActivity(intent);
-            }
-        });
-
 
         View create_scheduled_class_button = findViewById(R.id.create_scheduled_class);
         create_scheduled_class_button.setOnClickListener(new View.OnClickListener() { // goes to the Create Scheduled Class Page
