@@ -56,10 +56,7 @@
             android:name=".UserManager"
             android:exported="false"
             android:parentActivityName=".AdminPage" />
-        <activity
-            android:name=".InstrPage"
-            android:exported="false"
-            android:parentActivityName=".WelcomePage" />
+
     </application>
 
 </manifest>
