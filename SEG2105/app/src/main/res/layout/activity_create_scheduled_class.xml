@@ -57,6 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Create A New Class" />
+            android:text="Teach Class" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

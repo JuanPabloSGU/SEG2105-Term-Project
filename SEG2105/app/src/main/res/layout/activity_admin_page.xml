@@ -33,13 +33,4 @@
             android:text="View all Classes" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/create_scheduled_class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginBottom="384dp"
-        android:text="Create Scheduled Class"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

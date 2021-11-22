@@ -17,6 +17,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Teach Class"
+            android:id="@+id/create_scheduled_class"
+            />
+
+        <Button
             android:id="@+id/addClass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,5 +40,29 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="View Classes" />
+
+        <Button
+            android:id="@+id/SearchByInstr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Search By Instructor Name" />
+
+        <Button
+            android:id="@+id/SearchByClass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Search By Class Name" />
+
+        <Button
+            android:id="@+id/SearchAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Search All Classes" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
