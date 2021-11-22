@@ -31,5 +31,17 @@ public class InstrPage extends AppCompatActivity {
                 InstrPage.this.startActivity(intent);
             }
         });
+
+
+
+        View create_scheduled_class_button = findViewById(R.id.create_scheduled_class);
+        create_scheduled_class_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentMain = new Intent(InstrPage.this ,
+                        CreateScheduledClass.class);
+                InstrPage.this.startActivity(intentMain);
+            }
+        });
     }
 }
