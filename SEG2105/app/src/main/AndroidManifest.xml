@@ -13,7 +13,8 @@
             android:name=".CreateScheduledClass"
             android:exported="false"
             android:label="@string/title_activity_create_scheduled_class"
-            android:theme="@style/Theme.SEG2105.NoActionBar" />
+            android:theme="@style/Theme.SEG2105.NoActionBar"
+            android:parentActivityName=".InstrPage"/>
         <activity
             android:name=".EditClasses"
             android:exported="true"
