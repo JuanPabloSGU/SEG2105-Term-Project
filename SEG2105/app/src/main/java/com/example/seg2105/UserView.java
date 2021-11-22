@@ -129,6 +129,17 @@ public class UserView {
         return new UserView(user_name, user_role, user_id, user_email, instructor_data.getId());
     }
 
+    public static UserView getUserByUserID(String user_id)  throws ExecutionException, InterruptedException {
+        QuerySnapshot task = Tasks.await(db.collection("users").whereEqualTo("user_id", user_id).get());
+        DocumentSnapshot instructor_data = task.getDocuments().get(0);
+        DocumentSnapshot role_task = Tasks.await(instructor_data.getDocumentReference("role").get());
+        String user_name = instructor_data.get("username").toString();
+        String user_role = role_task.get("name").toString();
+        String user_email = instructor_data.get("email").toString();
+
+        return new UserView(user_name, user_role, user_id, user_email, instructor_data.getId());
+    }
+
     public static UserView getUserByUsername(String user_id)  throws ExecutionException, InterruptedException {
         QuerySnapshot task = Tasks.await(db.collection("users").whereEqualTo("username", user_id).get());
         DocumentSnapshot instructor_data = task.getDocuments().get(0);
@@ -138,6 +149,18 @@ public class UserView {
         String user_email = instructor_data.get("email").toString();
 
         return new UserView(user_name, user_role, user_id, user_email, instructor_data.getId());
+    }
+
+
+    public static UserView createUsingSnapshot(DocumentSnapshot user_snapshot)  throws ExecutionException, InterruptedException {
+        DocumentSnapshot role_task = Tasks.await(user_snapshot.getDocumentReference("role").get());
+        String user_name = user_snapshot.get("username").toString();
+        String user_role = role_task.get("name").toString();
+        String user_email = user_snapshot.get("email").toString();
+        String user_user_id = user_snapshot.get("user_id").toString();
+        String user_id = user_snapshot.getId();
+
+        return new UserView(user_name, user_role, user_user_id, user_email, user_id);
     }
 
 

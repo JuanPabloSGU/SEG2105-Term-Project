@@ -123,6 +123,7 @@ public class SignIn extends AppCompatActivity {
                             reload();
                             System.out.println("USER ROLE!!: " + user.role);
                                                 if(user.role.equals("admin")){
+                                                    UserView.setCurrentUser(user);
                                                     Intent intent = new Intent(getApplicationContext(), AdminPage.class);
                                                     SignIn.this.startActivity(intent);
                                                 }else{

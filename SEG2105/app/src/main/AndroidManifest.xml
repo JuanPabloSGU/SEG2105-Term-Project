@@ -10,10 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SEG2105">
         <activity
+            android:name=".CreateScheduledClass"
+            android:exported="false"
+            android:label="@string/title_activity_create_scheduled_class"
+            android:theme="@style/Theme.SEG2105.NoActionBar" />
+        <activity
             android:name=".EditClasses"
             android:exported="true"
-            android:parentActivityName=".CreateClasses"
-            />
+            android:parentActivityName=".CreateClasses" />
         <activity
             android:name=".CreateClasses"
             android:exported="true"
@@ -51,12 +55,10 @@
             android:name=".UserManager"
             android:exported="false"
             android:parentActivityName=".AdminPage" />
-
         <activity
             android:name=".InstrPage"
             android:exported="false"
-            android:parentActivityName=".WelcomePage"/>
-
+            android:parentActivityName=".WelcomePage" />
     </application>
 
 </manifest>

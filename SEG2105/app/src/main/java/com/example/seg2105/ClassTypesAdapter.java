@@ -17,9 +17,9 @@ import java.util.List;
 
 public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.ViewHolder> {
 
-    private List<ClassTypes> user_list;
+    private List<ClassType> user_list;
 
-    public ClassTypesAdapter(List<ClassTypes> user_list) {
+    public ClassTypesAdapter(List<ClassType> user_list) {
         this.user_list = user_list;
     }
 
@@ -42,12 +42,11 @@ public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.Vi
     @Override
     public void onBindViewHolder(ClassTypesAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
-        ClassTypes class_type = user_list.get(position);
-        String username = class_type.user.getUsername();
+        ClassType class_type = user_list.get(position);
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
 
-        textView.setText(class_type.getType() + " : " + class_type.description+" : "+username);
+        textView.setText(class_type.name + " : " + class_type.description);
         Button button = holder.deleteButton;
         button.setText("Delete");
         button.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +63,7 @@ public class ClassTypesAdapter extends RecyclerView.Adapter<ClassTypesAdapter.Vi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext().getApplicationContext(), EditClasses.class);
-                intent.putExtra("classId", class_type.getId());
+                intent.putExtra("classId", class_type.id);
                 ((Activity)view.getContext()).startActivityForResult(intent,1);
 
             }

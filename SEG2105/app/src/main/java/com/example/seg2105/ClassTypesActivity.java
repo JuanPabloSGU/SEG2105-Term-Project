@@ -72,7 +72,7 @@ public class ClassTypesActivity extends AppCompatActivity {
 
     // Loads all users to display to screen for admin
     public void loadUsers() throws ExecutionException, InterruptedException {
-        ArrayList<ClassTypes> class_types = ClassTypes.getAllClassTypes();
+        ArrayList<ClassType> class_types = ClassType.getAllClassTypes();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -90,6 +90,5 @@ public class ClassTypesActivity extends AppCompatActivity {
                 // That's all!
             }
         });
-
     }
 }
