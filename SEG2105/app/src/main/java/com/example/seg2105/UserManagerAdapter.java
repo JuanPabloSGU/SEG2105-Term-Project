@@ -15,7 +15,7 @@ import java.util.List;
 public class UserManagerAdapter extends RecyclerView.Adapter<UserManagerAdapter.ViewHolder> {
 
     private List<UserView> user_list;
-
+    //contains a list of all the current users
     public UserManagerAdapter(List<UserView> user_list) {
         this.user_list = user_list;
     }

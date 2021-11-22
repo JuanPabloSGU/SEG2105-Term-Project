@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
+// The Sign up page
 public class SignUp extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -69,7 +69,7 @@ public class SignUp extends AppCompatActivity {
                 EditText password = (EditText) findViewById(R.id.password);
 
                 System.out.println(username.getText().toString() + ", " + email.getText().toString() + ", " + password.getText().toString() + ", " + role);
-                if (username.toString() == null || email.toString() == null || password.toString() == null){
+                if (username.toString() == null || email.toString() == null || password.toString() == null){ // will show error if the input is nothing
                     Toast.makeText(SignUp.this, "Input is null!.",
                             Toast.LENGTH_SHORT).show();
                 }else {
@@ -83,7 +83,7 @@ public class SignUp extends AppCompatActivity {
 
     Button instructor, gymMember, signUp;
 
-
+    // adds the user to the User Database
     public void addUser(String user_name, String user_email, String user_password, String user_role){
         DocumentReference finalUser_role = null;
         switch(user_role){
@@ -107,7 +107,7 @@ public class SignUp extends AppCompatActivity {
                 data1.put("username", user_name);
                 data1.put("role", finalUser_role1);
                 data1.put("email", user_email);
-                db.collection("users").add(data1);
+                db.collection("users").add(data1); // addes to the user Database
             }
         });
     }

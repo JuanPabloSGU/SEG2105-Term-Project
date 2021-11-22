@@ -23,14 +23,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutionException;
-
+// The Sign in Page!
 public class SignIn extends AppCompatActivity {
-
+    // creates the text view for the inout of the users name and password
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     EditText username, password;
     Button login;
-
+    //creates the login button
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +70,7 @@ public class SignIn extends AppCompatActivity {
             }
         });
     }
-
+    //Searches the users database for a valid user
     private void authCheck(){
         FirebaseUser currentUser = mAuth.getCurrentUser();
 //        TextView login_details = findViewById(R.id.login_details);
@@ -107,7 +107,7 @@ public class SignIn extends AppCompatActivity {
             //role_details.setText("Not logged in");
         }
     }
-
+    // Signs in when a user's username is inputted
     private void signInWithUsername(String username, String password) throws InterruptedException, ExecutionException, IllegalAccessException, InvocationTargetException {
 
         UserView.getUserByUsername(username, new UserView.GetUserInterface() {
@@ -160,7 +160,7 @@ public class SignIn extends AppCompatActivity {
 
     }
 
-
+    //signs in when a users Email is inputted
     private void signIn(String email, String password) {
 
         // [START sign_in_with_email]

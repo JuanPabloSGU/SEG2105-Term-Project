@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
+// EDIT Classes page from the edit_classes xml
 public class EditClasses extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class EditClasses extends AppCompatActivity {
         confirmText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // takes the string of the textview edits the class description
                 String newEdit = newDescription.getText().toString();
                 Bundle bundle = getIntent().getExtras();
                 if(bundle != null){
