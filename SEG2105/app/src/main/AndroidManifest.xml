@@ -74,8 +74,6 @@
             android:parentActivityName=".SearchClassNamePage"
             />
 
-
-
     </application>
 
 </manifest>

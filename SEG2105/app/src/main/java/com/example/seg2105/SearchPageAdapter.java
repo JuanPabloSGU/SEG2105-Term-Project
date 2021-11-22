@@ -1,6 +1,7 @@
 package com.example.seg2105;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,12 @@ import java.util.List;
             textView.setText("Class Type : " + scheduledClass.class_type.name + ", Instructor : " + scheduledClass.instructor.getUsername() + ", Day of the week: " + scheduledClass.day_of_the_week);
             Button button = holder.deleteButton;
             button.setText("Delete");
+          //  button.setOnClickListener(new View.OnClickListener() {
+         //    @Override
+           // public void onClick(View view) {
+           //     scheduledClass.delete();
+          //  };
+       // });
         }
 
         // Returns the total count of items in the list

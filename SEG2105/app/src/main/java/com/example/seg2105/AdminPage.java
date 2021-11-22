@@ -41,16 +41,7 @@ public class AdminPage extends AppCompatActivity {
                 AdminPage.this.startActivity(intentMain);
             }
         });
-        // When Clicked, goes to the "Create Scheduled Class" page, or the CreateScheduleClass class
-        View create_scheduled_class_button = findViewById(R.id.create_scheduled_class);
-        create_scheduled_class_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentMain = new Intent(AdminPage.this ,
-                        CreateScheduledClass.class);//sets the intent from here to a new instance, the CreateScheduleClass class
-                AdminPage.this.startActivity(intentMain);
-            }
-        });
+
 
     }
 
