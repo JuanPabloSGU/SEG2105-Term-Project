@@ -81,7 +81,7 @@ public class CreateScheduledClass extends AppCompatActivity {
         String day_of_the_week = ((Spinner) findViewById(R.id.spinner2)).getSelectedItem().toString();
         String difficulty = ((Spinner) findViewById(R.id.spinner4)).getSelectedItem().toString();
 
-        UserView current_user = UserView.getCurrentUser();
+        User current_user = User.getCurrentUser();
 
         System.out.println(current_user);
 
@@ -98,7 +98,7 @@ public class CreateScheduledClass extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        customCallback cb = new customCallback() {
+                        customCallback cb = new customCallback<ScheduledClass>() {
                             @Override
                             public void onSuccess() {
                                 runOnUiThread(new Runnable() { // pop up of class successfully created
@@ -133,7 +133,7 @@ public class CreateScheduledClass extends AppCompatActivity {
                         // prints the class type to the terminal
                         try {
                             System.out.println("CLASS NAME: " + class_name);
-                            System.out.println("CURRENT USER ID: " + current_user.id);
+                            System.out.println("CURRENT USER ID: " + current_user.getId());
                             ClassType class_type = ClassType.searchByClassName(class_name);
                             ScheduledClass.create(day_of_the_week,capacityOfClass, difficulty,current_user,class_type, cb); // creates the class
                         } catch (ExecutionException e) {

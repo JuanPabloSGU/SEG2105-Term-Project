@@ -55,14 +55,13 @@ public class CreateClasses extends AppCompatActivity {
                     public void run() {
                         try { // throws if nothing is submitted
                             int capacityOfTheClass = Integer.parseInt(capacityOfClass.getText().toString());
-                            if (nameOfClass.getText().toString() == "" || descriptionOfClass.getText().toString() == "" || userID.getText().toString() == "" || capacityOfClass.getText().toString() == "") {
+                            if (nameOfClass.getText().toString() == "" || descriptionOfClass.getText().toString() == "") {
                                 throw new IllegalStateException();
                             }
-                            boolean flag = checkClasses(nameOfClass.getText().toString(), dayOfClass.getText().toString());
 
-                            if(flag == true) {
-                                ClassTypes.create(db, nameOfClass.getText().toString(), descriptionOfClass.getText().toString(), dayOfClass.getText().toString(), capacityOfTheClass, userID.getText().toString());
-                            }
+                            
+                            ClassType.create(nameOfClass.getText().toString(), descriptionOfClass.getText().toString());
+
 
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -90,34 +89,6 @@ public class CreateClasses extends AppCompatActivity {
                 }).start();
             }
         });
-    }
-    // checks classes to see if any have the same day and same type of class
-    public boolean checkClasses( String name ,  String day) {
-        boolean flag = true;
-        ArrayList<ClassTypes> allClasses = null;
-        try {
-            allClasses = ClassTypes.getAllClassTypes();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        for (int i = 0; i < allClasses.size(); i++) {
-            ClassTypes temp = allClasses.get(i);
-            if (temp.day.equals(day) && temp.name.equals(name)) {
-                flag = false; //OVERRIDDEN SCHEDULE
-                System.out.println("Class already scheduled for that day!");
-                //popup
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(CreateClasses.this, "Class already scheduled.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                break;
-            }
-        }
-        return flag;
     }
 
 }

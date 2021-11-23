@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
 
 // EDIT Classes page from the edit_classes xml
 public class EditClasses extends AppCompatActivity {
@@ -26,7 +29,19 @@ public class EditClasses extends AppCompatActivity {
                 Bundle bundle = getIntent().getExtras();
                 if(bundle != null){
                     String value = bundle.getString("classId");
-                    ClassTypes.editClassDescription(value, newEdit, UserView.getCurrentUser());
+                    customCallback cb = new customCallback() {
+                        @Override
+                        public void onSuccess() {
+                           Toast.makeText(EditClasses.this, "Authentication success.", Toast.LENGTH_SHORT).show();
+                        }
+                    };
+                    try {
+                        ClassType.editClassDescription(value, newEdit, cb);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }

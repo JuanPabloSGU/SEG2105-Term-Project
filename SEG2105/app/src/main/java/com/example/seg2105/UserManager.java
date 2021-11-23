@@ -60,7 +60,7 @@ public class UserManager extends AppCompatActivity {
     }
     //Loads all the users from UserManagerAdapter
     public void loadUsers() throws ExecutionException, InterruptedException {
-        ArrayList<UserView> users = UserView.getAllUsers();
+        ArrayList<User> users = User.getAllUsers();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

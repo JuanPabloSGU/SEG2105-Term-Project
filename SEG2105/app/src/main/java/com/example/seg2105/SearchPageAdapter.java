@@ -56,7 +56,7 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
             button.setOnClickListener(new View.OnClickListener() {
              @Override
             public void onClick(View view) {
-                 customCallback cb = new customCallback() {
+                 customCallback cb = new customCallback<ScheduledClass>() {
 
 
                      @Override

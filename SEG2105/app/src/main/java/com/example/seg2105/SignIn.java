@@ -3,6 +3,8 @@ package com.example.seg2105;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -109,118 +111,75 @@ public class SignIn extends AppCompatActivity {
     }
     // Signs in when a user's username is inputted
     private void signInWithUsername(String username, String password) throws InterruptedException, ExecutionException, IllegalAccessException, InvocationTargetException {
-
-        UserView.getUserByUsername(username, new UserView.GetUserInterface() {
+        new Thread(new Runnable() {
             @Override
-            public void onSuccess(UserView user) {
-                System.out.println("USER ASDFASDFASDF: " + user.email);
-                mAuth.signInWithEmailAndPassword(user.email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            System.out.println("logged in success");
-                                    // Sign in success, update UI with the signed-in user's information
-                            reload();
-                            System.out.println("USER ROLE!!: " + user.role);
-                                                if(user.role.equals("admin")){
-                                                    UserView.setCurrentUser(user);
-                                                    Intent intent = new Intent(getApplicationContext(), AdminPage.class);
-                                                    SignIn.this.startActivity(intent);
-                                                }else{
-                                                    // Welcome page
-                                                    Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+            public void run() {
+//                User found_user = null;
+                try {
+                    User found_user = User.getUserByUsername(username);
+                    System.out.println("FOUND USER");
+                    System.out.println(found_user.getUsername());
+                    signIn(found_user.getEmail(), password);
 
-                                                    String userInformation = user.getUsername();
-                                                    Bundle bundle = new Bundle();
-                                                    bundle.putString("Role", user.role);
-                                                    bundle.putString("Name", user.getUsername());
-                                                    intent.putExtras(bundle);
-                                                    UserView.setCurrentUser(user);
-
-                                                    SignIn.this.startActivity(intent);
-                                                }
-
-                                } else {
-                                    System.out.println("logged in failed");
-
-                                    // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(SignIn.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                    reload();
-//                            updateUI(null);
-                                }
-                            }
-                        });
-                // [END sign_in_with_email]
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        });
-
-        // [START sign_in_with_email]
+        }).start();
 
     }
 
     //signs in when a users Email is inputted
     private void signIn(String email, String password) {
 
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                // [START sign_in_with_email]
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                reload();
+                new Thread(new Runnable() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            System.out.println("logged in success");
-                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            reload();
-                            try {
-                                UserView.getUserByID(user.getUid(),  new UserView.GetUserInterface() {
+                    public void run() {
+                        try {
 
-                                    @Override
-                                    public void onSuccess(UserView user) {
-                                        System.out.println("USER ROLE!!: " + user.role);
-                                        if(user.role.equals("admin")){
-                                            Intent intent = new Intent(getApplicationContext(), AdminPage.class);
-                                            SignIn.this.startActivity(intent);
-                                        }else{
-                                            // Welcome page
-                                            Intent intent = new Intent(getApplicationContext(), WelcomePage.class);
+                            User signed_in_user = User.getUserByUserId(user.getUid());
+                            User.setCurrentUser(signed_in_user);
+                            Intent intent;
+                            if (signed_in_user.getRole().getName().equals("admin")) {
+                                intent = new Intent(getApplicationContext(), AdminPage.class);
+                            } else {
+                                // Welcome page
+                                intent = new Intent(getApplicationContext(), WelcomePage.class);
 
-                                            String userInformation = user.getUsername();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("Role", user.role);
-                                            bundle.putString("Name", user.getUsername());
-                                            intent.putExtras(bundle);
-
-                                            SignIn.this.startActivity(intent);
-                                        }
-                                    }
-
-                                });
-                                // Catchers for common exceptions appear below
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (InvocationTargetException e) {
-                                e.printStackTrace();
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            };
-
-                        } else {
-                            System.out.println("logged in failed");
-
-                            // If sign in fails, display a message to the user.
-//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(SignIn.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            reload();
-//                            updateUI(null);
+                            }
+                            runOnUiThread(new Runnable() { // pop up of class successfully created
+                                @Override
+                                public void run() {
+                                    Toast.makeText(SignIn.this, "Authentication success.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            SignIn.this.startActivity(intent);
+                            // Catchers for common exceptions appear below
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }
-                });
+                }).start();
+                ;
+
+            } else {
+                System.out.println("logged in failed");
+
+                // If sign in fails, display a message to the user.
+                Toast.makeText(SignIn.this, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
+                reload();
+            }
+        });
         // [END sign_in_with_email]
     }
 

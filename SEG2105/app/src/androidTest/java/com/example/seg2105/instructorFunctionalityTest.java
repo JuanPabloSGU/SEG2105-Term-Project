@@ -112,10 +112,11 @@ public class instructorFunctionalityTest {
         timeout();
 
         // This will gather all of the classes and this won't delete the other classes
-        ArrayList<ClassTypes> class_types = ClassTypes.getAllClassTypes();
-        for(ClassTypes class_type : class_types){
-            class_type.delete();
-        }
+        // this needs to be reimplemented
+//        ArrayList<ClassType> class_types = ClassType.getAllClassTypes();
+//        for(ClassType class_type : class_types){
+//            class_type.delete();
+//        }
 
     }
 
@@ -142,9 +143,9 @@ public class instructorFunctionalityTest {
 
         // This will gather all of the classes and this won't delete the other classes
         // This should only delete the classes that the instructor has
-        ArrayList<ClassTypes> class_types = ClassTypes.searchByInstructor("testInstructor");
-        for(ClassTypes class_type : class_types){
-            class_type.delete();
-        }
+//        ArrayList<ClassTypes> class_types = ClassTypes.searchByInstructor("testInstructor");
+//        for(ClassTypes class_type : class_types){
+//            class_type.delete();
+//        }
     }
 }

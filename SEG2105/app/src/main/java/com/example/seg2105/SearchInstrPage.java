@@ -52,14 +52,14 @@ public class SearchInstrPage extends AppCompatActivity {
 
     public void loadClassTypes(Context context) throws ExecutionException, InterruptedException {
 
-        ArrayList<UserView> users = UserView.getAllUsers();
+        ArrayList<User> users = User.getAllUsers();
 
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 ArrayList<String> class_types_name = new ArrayList<String>();
-                for (UserView user : users) {
+                for (User user : users) {
                     class_types_name.add(user.getUsername());
                 }
                 Spinner spinner = (Spinner) findViewById(R.id.spinnerInstr);

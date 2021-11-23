@@ -13,17 +13,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 // class for the schedule classes
-public class ScheduledClass {
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private FirebaseAuth mAuth;
+public class ScheduledClass extends Model.ModelHack {
+    private static final String COLLECTION_NAME = "scheduled_classes";
     private String id;
     public String day_of_the_week;
-    public UserView instructor;
+    public User instructor;
     public int capacity;
     public String difficulty;
     public ClassType class_type;
 
-    public ScheduledClass(String id, String day_of_the_week, int capacity, String difficulty, UserView instructor, ClassType class_type){
+    public ScheduledClass(String id, String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type){
         this.id = id;
         this.day_of_the_week = day_of_the_week;
         this.capacity = capacity;
@@ -32,16 +31,16 @@ public class ScheduledClass {
         this.class_type = class_type;
     }
     // creates and returns a static scheduled class , with the custom callback (FOR ADMINS)
-    public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, UserView instructor, ClassType class_type, customCallback cb) throws ExecutionException, InterruptedException {
+    public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, customCallback cb) throws ExecutionException, InterruptedException {
         return ScheduledClass.genericCreate(day_of_the_week, capacity, difficulty,  instructor, class_type, cb);
     }
     // creates and returns scheduled class that an instructor is using
     public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, String instructor_user_id, ClassType class_type, customCallback cb) throws ExecutionException, InterruptedException {
-        UserView instructor = UserView.getUserByID(instructor_user_id);
+        User instructor = User.getUserByUserId(instructor_user_id);
         return ScheduledClass.genericCreate(day_of_the_week, capacity, difficulty,  instructor, class_type, cb);
     }
     // generically creates a scheduled class
-    private static ScheduledClass genericCreate(String day_of_the_week, int capacity, String difficulty, UserView instructor, ClassType class_type, customCallback cb) throws ExecutionException, InterruptedException {
+    private static ScheduledClass genericCreate(String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, customCallback cb) throws ExecutionException, InterruptedException {
         if(searchByClassTypeNameAndDayOfTheWeek(class_type.name, day_of_the_week) != null){
             cb.onError("class already exists");
             return null;
@@ -50,11 +49,11 @@ public class ScheduledClass {
             data1.put("day_of_the_week", day_of_the_week);
             data1.put("capacity", capacity);
             data1.put("difficulty", difficulty);
-            DocumentReference instructor_reference =  db.document("/users/" + instructor.id);
+            DocumentReference instructor_reference =  DB.document("/users/" + instructor.getId());
             data1.put("instructor", instructor_reference);
-            DocumentReference class_type_reference =  db.document("/class_types/" + class_type.id);
+            DocumentReference class_type_reference =  DB.document("/class_types/" + class_type.id);
             data1.put("class_type", class_type_reference);
-            DocumentReference result = Tasks.await(db.collection("scheduled_classes").add(data1)); // throws into Database
+            DocumentReference result = Tasks.await(DB.collection(COLLECTION_NAME).add(data1)); // throws into Database
             cb.onSuccess();
             return new ScheduledClass(result.getId(), day_of_the_week, capacity, difficulty,  instructor, class_type);
         }
@@ -63,19 +62,22 @@ public class ScheduledClass {
     public static ArrayList<ScheduledClass> getAllScheduledClasses() throws ExecutionException, InterruptedException {
         ArrayList<ScheduledClass> scheduled_classes = new ArrayList<ScheduledClass>();
 
-        QuerySnapshot task = Tasks.await(db.collection("scheduled_classes").get());
+        QuerySnapshot task = Tasks.await(DB.collection("scheduled_classes").get());
 
         for (DocumentSnapshot document : task.getDocuments()) {
             scheduled_classes.add(createUsingReference(document));
         }
         return scheduled_classes;
     }
+
+    public static ScheduledClass genericGetOne(String field_name, String field_value) throws ExecutionException, InterruptedException {
+        DocumentSnapshot document = ScheduledClass.genericGetOneDocument(field_name, field_value, COLLECTION_NAME);
+        assert document != null;
+        return createUsingReference(document);
+    }
     // returns a scheduled class from it's ID
     public static ScheduledClass getByID(String id) throws ExecutionException, InterruptedException {
-        QuerySnapshot task = Tasks.await(db.collection("scheduled_classes").whereEqualTo("id", id).get());
-        DocumentSnapshot document = task.getDocuments().get(0);
-        return createUsingReference(document);
-
+        return genericGetOne("id", id);
     }
     //creates a schedule class using a reference
     public static ScheduledClass createUsingReference(DocumentSnapshot document) throws ExecutionException, InterruptedException {
@@ -84,10 +86,10 @@ public class ScheduledClass {
         int capacity = Integer.parseInt(document.get("capacity").toString());
 
         DocumentSnapshot instructor_reference = Tasks.await(document.getDocumentReference("instructor").get());
-        UserView instructor = UserView.createUsingSnapshot(instructor_reference);
+        User instructor = User.createUsingReference(instructor_reference);
 
         DocumentSnapshot class_type_reference = Tasks.await(document.getDocumentReference("class_type").get());
-        ClassType class_type = ClassType.createUsingSnapshot(class_type_reference);
+        ClassType class_type = ClassType.createUsingReference(class_type_reference);
 
         return new ScheduledClass(document.getId(), day_of_the_week, capacity, difficulty, instructor, class_type);
     }
@@ -102,8 +104,8 @@ public class ScheduledClass {
     }
     // internally deletes a schedule class from the database
     private static void internalDelete(ScheduledClass scheduled_class_to_delete, customCallback cb){
-        if(scheduled_class_to_delete.instructor.id.equals(UserView.getCurrentUser().id)){
-            db.collection("scheduled_classes").document(scheduled_class_to_delete.id).delete();
+        if(scheduled_class_to_delete.instructor.getId().equals(User.getCurrentUser().getId())){
+            DB.collection(COLLECTION_NAME).document(scheduled_class_to_delete.id).delete();
             cb.onSuccess();
         } else {
             cb.onError("You must be the instructor of this class in order to delete it");
@@ -112,9 +114,9 @@ public class ScheduledClass {
 
     // returns a list of all schedule classes under a instructors username
     public static ArrayList<ScheduledClass> searchByInstructorUsername(String instructor_username) throws ExecutionException, InterruptedException {
-        UserView instructor = UserView.getUserByUsername(instructor_username);
-        DocumentReference ref = db.document("/users/" + instructor.id);
-        QuerySnapshot task = Tasks.await(db.collection("scheduled_classes").whereEqualTo("instructor", ref).get());
+        User instructor = User.getUserByUsername(instructor_username);
+        DocumentReference ref = DB.document("/users/" + instructor.getId());
+        QuerySnapshot task = Tasks.await(DB.collection("scheduled_classes").whereEqualTo("instructor", ref).get());
         ArrayList<ScheduledClass> class_list = new ArrayList<ScheduledClass>();
         for (DocumentSnapshot document : task.getDocuments()) {
             class_list.add(createUsingReference(document));
@@ -124,8 +126,8 @@ public class ScheduledClass {
     // returns a list of all classes by its class name
     public static ArrayList<ScheduledClass> searchByClassTypeName(String class_name) throws ExecutionException, InterruptedException {
         ClassType classType = ClassType.searchByClassName(class_name);
-        DocumentReference ref = db.document("/class_types/" + classType.id);
-        QuerySnapshot task = Tasks.await(db.collection("scheduled_classes").whereEqualTo("class_type", ref).get());
+        DocumentReference ref = DB.document("/class_types/" + classType.id);
+        QuerySnapshot task = Tasks.await(DB.collection("scheduled_classes").whereEqualTo("class_type", ref).get());
         ArrayList<ScheduledClass> class_list = new ArrayList<ScheduledClass>();
         for (DocumentSnapshot document : task.getDocuments()) {
             class_list.add(createUsingReference(document));
@@ -135,8 +137,8 @@ public class ScheduledClass {
     // returns a scheduled class from its class type and day of the week
     public static ScheduledClass searchByClassTypeNameAndDayOfTheWeek(String class_name, String day_of_the_week) throws ExecutionException, InterruptedException {
         ClassType classType = ClassType.searchByClassName(class_name);
-        DocumentReference ref = db.document("/class_types/" + classType.id);
-        List<DocumentSnapshot> documents = Tasks.await(db.collection("scheduled_classes").whereEqualTo("class_type", ref).whereEqualTo("day_of_the_week", day_of_the_week).get()).getDocuments();
+        DocumentReference ref = DB.document("/class_types/" + classType.id);
+        List<DocumentSnapshot> documents = Tasks.await(DB.collection("scheduled_classes").whereEqualTo("class_type", ref).whereEqualTo("day_of_the_week", day_of_the_week).get()).getDocuments();
         if(documents.isEmpty()){
             System.out.println("RETURNING EMPTY");
             return null;

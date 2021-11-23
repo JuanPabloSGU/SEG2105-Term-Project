@@ -14,9 +14,9 @@ import java.util.List;
 
 public class UserManagerAdapter extends RecyclerView.Adapter<UserManagerAdapter.ViewHolder> {
 
-    private List<UserView> user_list;
+    private List<User> user_list;
     //contains a list of all the current users
-    public UserManagerAdapter(List<UserView> user_list) {
+    public UserManagerAdapter(List<User> user_list) {
         this.user_list = user_list;
     }
 
@@ -39,11 +39,11 @@ public class UserManagerAdapter extends RecyclerView.Adapter<UserManagerAdapter.
     @Override
     public void onBindViewHolder(UserManagerAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
-        UserView user = user_list.get(position);
+        User user = user_list.get(position);
 
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
-        textView.setText("Username : " + user.getUsername() + ", Role : " + user.getRole());
+        textView.setText("Username : " + user.getUsername() + ", Role : " + user.getRole().getName());
         Button button = holder.deleteButton;
         button.setText("Delete");
     }

@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 // Class for a single ClassType
-public class ClassType {
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+public class ClassType extends  Model.ModelHack {
+    private static final String COLLECTION_NAME = "class_types";
     public String id;
     public String name;
     public String description;
@@ -22,12 +22,12 @@ public class ClassType {
         this.description = description;
     }
     // create method for a class
-    public static ClassType create(String name, String description, String day, int capacity, String user_id) throws ExecutionException, InterruptedException {
+    public static ClassType create(String name, String description) throws ExecutionException, InterruptedException {
         // checkClasses();
         Map<String, Object> data1 = new HashMap<>();
         data1.put("name", name);
         data1.put("description", description);
-        DocumentReference result = Tasks.await(db.collection("class_types").add(data1)); //sends to firebase db
+        DocumentReference result = Tasks.await(DB.collection(COLLECTION_NAME).add(data1)); //sends to firebase db
 
         return new ClassType(result.getId(), name, description);
     }
@@ -35,7 +35,7 @@ public class ClassType {
     public static ArrayList<ClassType> getAllClassTypes()  throws ExecutionException, InterruptedException {
         ArrayList<ClassType> class_types = new ArrayList<ClassType>();
 
-        QuerySnapshot task = Tasks.await(db.collection("class_types").get());
+        QuerySnapshot task = Tasks.await(DB.collection(COLLECTION_NAME).get());
 
         for (DocumentSnapshot document : task.getDocuments()) {
 
@@ -48,8 +48,8 @@ public class ClassType {
     }
     // deletes classes
     public void delete(){
-        if(UserView.current_user.role.equals("admin")) { //if users role is admin
-            db.collection("class_types").document(this.id).delete();
+        if(User.getCurrentUser().getRole().getName().equals("admin")) { //if users role is admin
+            DB.collection("class_types").document(this.id).delete();
             System.out.println("Successfully deleted");
         }
         else{ // cant delete otherwise
@@ -58,8 +58,8 @@ public class ClassType {
     }
     // deletes with the update for the custom callback
     public void delete(customCallback cb) throws ExecutionException, InterruptedException {
-        if(UserView.current_user.role.equals("admin")) {
-            Void document = Tasks.await(db.collection("class_types").document(this.id).delete());
+        if(User.getCurrentUser().getRole().getName().equals("admin")) {
+            Void document = Tasks.await(DB.collection(COLLECTION_NAME).document(this.id).delete());
             cb.onSuccess();
         }
         else{
@@ -72,7 +72,7 @@ public class ClassType {
 
     // Edit class description using admin role , with the id of the user, and the new description
     public static void editClassDescription(String id, String new_description) throws ExecutionException, InterruptedException {
-        if(UserView.getCurrentUser().role.equals("admin")) { //only for user role
+        if(User.getCurrentUser().getRole().getName().equals("admin")) {
             ClassType.editClassDescriptionInternally(id, new_description);
         }
         else{
@@ -81,7 +81,7 @@ public class ClassType {
     }
     // Edit class description including custom callback
     public static void editClassDescription(String id, String new_description, customCallback cb) throws ExecutionException, InterruptedException {
-        if(UserView.getCurrentUser().role.equals("admin")) { // only user role
+        if(User.getCurrentUser().getRole().getName().equals("admin")) {
             ClassType.editClassDescriptionInternally(id, new_description);
             cb.onSuccess();
         }
@@ -96,12 +96,12 @@ public class ClassType {
     }
     //internally within the database changes the description
     private static void editClassDescriptionInternally(String id, String new_description) throws ExecutionException, InterruptedException {
-        Tasks.await(db.collection("class_types").document(id).update("description", new_description));
+        Tasks.await(DB.collection(COLLECTION_NAME).document(id).update("description", new_description));
     }
 
     // Edit a class Name, using the Id of the user, the new name of the class, and the customCallback to update
     public static void editClassName(String id, String new_name, customCallback cb) throws ExecutionException, InterruptedException {
-        if(UserView.getCurrentUser().role.equals("admin")) { // user role admin only
+        if(User.getCurrentUser().getRole().getName().equals("admin")) {
             ClassType.editClassNameInternally(id, new_name);
             cb.onSuccess();
         }
@@ -115,30 +115,28 @@ public class ClassType {
     }
     // edits the class name of the database
     private static void editClassNameInternally(String id, String new_name) throws ExecutionException, InterruptedException {
-        Tasks.await(db.collection("class_types").document(id).update("name", new_name));
+        Tasks.await(DB.collection(COLLECTION_NAME).document(id).update("name", new_name));
+    }
+
+    public static ClassType genericGetOne(String field_name, String field_value) throws ExecutionException, InterruptedException {
+        DocumentSnapshot document = ScheduledClass.genericGetOneDocument(field_name, field_value, COLLECTION_NAME);
+        assert document != null;
+        return createUsingReference(document);
     }
 
     // Search class by Name
     // search Classes by Name , with an input by the String new class name, returns the new class Type
     public static ClassType searchByClassName(String class_name) throws ExecutionException, InterruptedException {
-        QuerySnapshot task = Tasks.await(db.collection("class_types").whereEqualTo("name", class_name).get());
-        DocumentSnapshot document = task.getDocuments().get(0);
-        String name = document.get("name").toString();
-        String description = document.get("description").toString();
-        return new ClassType(document.getId(), name, description);
+        return genericGetOne("name", class_name);
     }
 
     // returns new Class Type of a get Class By ID using the class type ID
     public static ClassType getByID(String class_type_id) throws ExecutionException, InterruptedException {
-        QuerySnapshot task = Tasks.await(db.collection("class_types").whereEqualTo("id", class_type_id).get());
-        DocumentSnapshot document = task.getDocuments().get(0);
-        String name = document.get("name").toString();
-        String description = document.get("description").toString();
-        return new ClassType(document.getId(), name, description);
+        return genericGetOne("id", class_type_id);
     }
 
     // returns static class Type of the classtype created from Document Snapshot
-    public static ClassType createUsingSnapshot(DocumentSnapshot class_type_snapshot)  throws ExecutionException, InterruptedException {
+    public static ClassType createUsingReference(DocumentSnapshot class_type_snapshot)  throws ExecutionException, InterruptedException {
         String id = class_type_snapshot.getId();
         String name = class_type_snapshot.get("name").toString();
         String description = class_type_snapshot.get("description").toString();
