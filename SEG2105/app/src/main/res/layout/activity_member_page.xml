@@ -30,16 +30,16 @@
             android:text="Search By Class Name" />
 
         <Button
-            android:id="@+id/ViewEnrolled"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View Enrolled Classes" />
-
-        <Button
             android:id="@+id/SearchByDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search By Day" />
+
+        <Button
+            android:id="@+id/ViewEnrolled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Enrolled Classes" />
 
     </LinearLayout>
 
