@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MemberPage">
+    tools:context=".Member">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,32 +12,39 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498"><![CDATA[>
+
+
+
+        ]]>
 
         <Button
+            android:id="@+id/MemViewClasses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="View Classes"
-            />
+            android:text="View Classes" />
 
         <Button
             android:id="@+id/SearchByClass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="48dp"
-            android:text="Search By Class Name"/>
+            android:text="Search By Class Name" />
 
         <Button
             android:id="@+id/SearchByDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search By Day"
-            tools:layout_editor_absoluteX="10dp"
-            tools:layout_editor_absoluteY="96dp" />
+            android:text="Search By Day" />
+
+        <Button
+            android:id="@+id/ViewEnrolled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Enrolled Classes" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
