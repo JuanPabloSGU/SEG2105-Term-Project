@@ -17,18 +17,6 @@ public class Member extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Member.this, SearchViewPage.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("search_page", "all");
-                intent.putExtras(bundle);
-                Member.this.startActivity(intent);
-            }
-        });
-
-        View search_class_button = findViewById(R.id.SearchByClass);
-        search_class_button.setOnClickListener(new View.OnClickListener() { // goes to Search Class Name Page
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Member.this, SearchClassNamePage.class);
                 Member.this.startActivity(intent);
             }
         });
@@ -41,6 +29,16 @@ public class Member extends AppCompatActivity {
                 Member.this.startActivity(intent);
             }
         });
+
+        View view_joinclass = findViewById(R.id.JoinClass);
+        view_joinclass.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Member.this, JoinClass.class);
+                Member.this.startActivity(intent);
+            }
+        });
+
     }
 
 }
