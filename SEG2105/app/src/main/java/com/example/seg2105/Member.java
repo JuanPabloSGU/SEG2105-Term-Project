@@ -12,9 +12,35 @@ public class Member extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_page);
 
-        //View viewClass = findViewById(R.id.MemViewClasses);
+        View viewClass = findViewById(R.id.MemViewClasses);
+        viewClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Member.this, SearchViewPage.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("search_page", "all");
+                intent.putExtras(bundle);
+                Member.this.startActivity(intent);
+            }
+        });
 
+        View search_class_button = findViewById(R.id.SearchByClass);
+        search_class_button.setOnClickListener(new View.OnClickListener() { // goes to Search Class Name Page
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Member.this, SearchClassNamePage.class);
+                Member.this.startActivity(intent);
+            }
+        });
 
+        View view_enroll_button = findViewById(R.id.ViewEnrolled);
+        view_enroll_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(Member.this, ViewEnrolled.class);
+                Member.this.startActivity(intent);
+            }
+        });
     }
 
 }
