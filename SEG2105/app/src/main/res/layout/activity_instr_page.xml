@@ -24,7 +24,7 @@
             android:text="Teach Class"
             android:id="@+id/create_scheduled_class"
             />
-        
+
         <Button
             android:id="@+id/SearchByInstr"
             android:layout_width="match_parent"
