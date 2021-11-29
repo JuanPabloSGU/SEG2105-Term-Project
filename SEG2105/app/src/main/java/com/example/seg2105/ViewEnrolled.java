@@ -1,4 +1,13 @@
 package com.example.seg2105;
 
-public class ViewEnrolled {
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class ViewEnrolled extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_enrolled);
+    }
 }
