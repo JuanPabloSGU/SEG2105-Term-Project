@@ -64,7 +64,7 @@ public class signUpTest {
         onView(withId(R.id.email)).perform(typeText("test3@gmail.com"), click());
         onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
 
-        onView(withId(R.id.instructor_button)).perform(click());
+        onView(withId(R.id.gymMember_button)).perform(click());
 
         onView(withId(R.id.signup_button)).perform(click());
 

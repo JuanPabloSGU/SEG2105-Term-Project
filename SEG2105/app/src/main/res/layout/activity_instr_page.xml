@@ -26,14 +26,6 @@
             />
 
         <Button
-            android:id="@+id/addClass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="Add Class" />
-
-        <Button
             android:id="@+id/SearchByInstr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
