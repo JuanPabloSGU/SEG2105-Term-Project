@@ -145,6 +145,8 @@ public class SignIn extends AppCompatActivity {
                         try {
 
                             User signed_in_user = User.getUserByUserId(user.getUid());
+                            System.out.println("setting signed in user to: ");
+                            System.out.println(signed_in_user.getRole());
                             User.setCurrentUser(signed_in_user);
                             Intent intent;
                             if (signed_in_user.getRole().getName().equals("admin")) {

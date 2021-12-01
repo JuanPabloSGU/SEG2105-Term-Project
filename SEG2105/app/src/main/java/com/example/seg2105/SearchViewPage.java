@@ -50,6 +50,7 @@ public class SearchViewPage extends AppCompatActivity {
         ArrayList<ScheduledClass> classes;
         Bundle bundle = getIntent().getExtras();
         String which_page = bundle.getString("search_page");
+        User current_user = User.getCurrentUser();
         if(which_page.equals("all")) {
             classes = ScheduledClass.getAllScheduledClasses();
         }
@@ -57,7 +58,22 @@ public class SearchViewPage extends AppCompatActivity {
             classes = ScheduledClass.searchByInstructorUsername(bundle.getString("search_page_instructor_username"));
         }
         else if(which_page.equals("class_type")) {
-            classes = ScheduledClass.searchByClassTypeName(bundle.getString("search_page_class_type_name"));
+            if(current_user.getRole().getName().equals("member")){
+                classes = ScheduledClass.searchByClassTypeName(bundle.getString("search_page_class_type_name"), current_user);
+
+            } else {
+                classes = ScheduledClass.searchByClassTypeName(bundle.getString("search_page_class_type_name"));
+
+            }
+        }
+        else if(which_page.equals("day")) {
+            if(current_user.getRole().getName().equals("member")){
+                classes = ScheduledClass.searchByDayOfTheWeek(bundle.getString("search_page_class_day_of_the_week"), current_user);
+
+            } else {
+                classes = ScheduledClass.searchByDayOfTheWeek(bundle.getString("search_page_class_day_of_the_week"));
+
+            }
         } else {
             classes = ScheduledClass.getAllScheduledClasses();
         }

@@ -25,6 +25,7 @@ public class WelcomePage extends AppCompatActivity {
         userRole = findViewById(R.id.user_role_info);
         // pulls the users name and role from the current bundle and displays on the screen
         User signed_in_user = User.getCurrentUser();
+        System.out.println(signed_in_user);
         userRoleInformation = signed_in_user.getRole().getName();
         userInformation = signed_in_user.getUsername();
 

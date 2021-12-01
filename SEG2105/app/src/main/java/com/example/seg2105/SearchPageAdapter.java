@@ -52,43 +52,83 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
             TextView textView = holder.nameTextView;
             textView.setText("Class Type : " + scheduledClass.class_type.name + ", Instructor : " + scheduledClass.instructor.getUsername() + ", Day of the week: " + scheduledClass.day_of_the_week);
             Button button = holder.deleteButton;
-            button.setText("Delete");
-            button.setOnClickListener(new View.OnClickListener() {
-             @Override
-            public void onClick(View view) {
-                 customCallback cb = new customCallback<ScheduledClass>() {
+            User current_user = User.getCurrentUser();
+            if(current_user.getRole().getName().equals("member")){
+                button.setText("Join");
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        customCallback cb = new customCallback<ScheduledClass>() {
 
 
-                     @Override
-                     public void onSuccess() {
-                         Toast.makeText(view.getContext(), "Class successfully deleted!", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onSuccess() {
 
-                     }
+                                Toast.makeText(view.getContext(), "Class successfully deleted!", Toast.LENGTH_SHORT).show();
 
-                     @Override
-                     public void onSuccess(Task<AuthResult> task) {
+                            }
 
-                     }
+                            @Override
+                            public void onSuccess(Task<AuthResult> task) {
 
-                     @Override
-                     public void onError(Exception err) {
+                            }
 
-                     }
-                     // pop up for error
-                     @Override
-                     public void onError(String err) {
-                         Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
-                     }
-                 };
-                 try {
-                     scheduledClass.delete(cb);
-                 } catch (ExecutionException e) {
-                     e.printStackTrace();
-                 } catch (InterruptedException e) {
-                     e.printStackTrace();
-                 }
-             };
-        });
+                            @Override
+                            public void onError(Exception err) {
+
+                            }
+                            // pop up for error
+                            @Override
+                            public void onError(String err) {
+                                Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        current_user.joinClass(scheduledClass, cb);
+
+                    };
+                });
+            } else {
+                button.setText("Delete");
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        customCallback cb = new customCallback<ScheduledClass>() {
+
+
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(view.getContext(), "Class successfully deleted!", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            @Override
+                            public void onSuccess(Task<AuthResult> task) {
+
+                            }
+
+                            @Override
+                            public void onError(Exception err) {
+
+                            }
+                            // pop up for error
+                            @Override
+                            public void onError(String err) {
+                                Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        try {
+                            scheduledClass.delete(cb);
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    };
+                });
+            }
+
         }
 
         // Returns the total count of items in the list

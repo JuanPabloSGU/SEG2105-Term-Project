@@ -64,6 +64,10 @@
             android:exported="false"
             android:parentActivityName=".InstrPage"/>
         <activity
+            android:name=".SearchDayPage"
+            android:exported="false"
+            android:parentActivityName=".InstrPage"/>
+        <activity
             android:name=".SearchInstrPage"
             android:exported="false"
             android:parentActivityName=".InstrPage"/>

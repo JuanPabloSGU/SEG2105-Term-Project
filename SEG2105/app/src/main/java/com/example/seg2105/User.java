@@ -3,6 +3,8 @@ package com.example.seg2105;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
@@ -101,6 +103,46 @@ public class User extends Model.ModelHack {
 
     public Role getRole(){
         return this.role;
+    }
+
+    public void joinClass(ScheduledClass scheduledClass, customCallback cb) {
+        Map<String, Object> data1 = new HashMap<>();
+        DocumentReference user_reference = DB.document("/users/" + this.getId());
+        DocumentReference scheduled_class_reference = DB.document("/scheduled_classes/" + scheduledClass.id);
+
+        data1.put("user", user_reference);
+        data1.put("scheduled_class", scheduled_class_reference);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("calling");
+                DB.collection("joined_classes").add(data1).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        cb.onSuccess();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        cb.onError(e);
+
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public ArrayList<ScheduledClass> getEnrolledClasses() throws ExecutionException, InterruptedException {
+        ArrayList<ScheduledClass> scheduledClasses = new ArrayList<ScheduledClass>();
+        DocumentReference user_reference = DB.document("/users/" + this.getId());
+
+        QuerySnapshot task = Tasks.await(DB.collection("joined_classes").whereEqualTo("user",user_reference).get());
+
+        for (DocumentSnapshot document : task.getDocuments()) {
+            scheduledClasses.add(ScheduledClass.createUsingReference(Tasks.await(document.getDocumentReference("scheduled_class").get())));
+        }
+        return scheduledClasses;
     }
 
     public static User createUsingReference(DocumentSnapshot document) throws ExecutionException, InterruptedException {

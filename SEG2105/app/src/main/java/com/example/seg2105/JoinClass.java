@@ -15,7 +15,7 @@ public class JoinClass extends AppCompatActivity {
         searchDay.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(JoinClass.this, MemberSearchDayPage.class);
+                Intent intent = new Intent(JoinClass.this, SearchDayPage.class);
                 JoinClass.this.startActivity(intent);
             }
         });
@@ -24,7 +24,7 @@ public class JoinClass extends AppCompatActivity {
         searchClass.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view){
-                Intent intent = new Intent(JoinClass.this, MemberSearchClassPage.class);
+                Intent intent = new Intent(JoinClass.this, SearchClassNamePage.class);
                 JoinClass.this.startActivity(intent);
             }
         });

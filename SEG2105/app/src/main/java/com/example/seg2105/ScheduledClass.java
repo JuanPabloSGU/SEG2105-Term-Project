@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 // class for the schedule classes
 public class ScheduledClass extends Model.ModelHack {
     private static final String COLLECTION_NAME = "scheduled_classes";
-    private String id;
+    public String id;
     public String day_of_the_week;
     public User instructor;
     public int capacity;
@@ -93,6 +93,7 @@ public class ScheduledClass extends Model.ModelHack {
 
         return new ScheduledClass(document.getId(), day_of_the_week, capacity, difficulty, instructor, class_type);
     }
+
     // deletes a schedule class
     public static void delete(String id, customCallback cb) throws ExecutionException, InterruptedException {
         ScheduledClass scheduled_class_to_delete = getByID(id);
@@ -134,6 +135,27 @@ public class ScheduledClass extends Model.ModelHack {
         }
         return class_list;
     }
+    // returns a list of all classes by its class name
+    public static ArrayList<ScheduledClass> searchByClassTypeName(String class_name,User user) throws ExecutionException, InterruptedException {
+        ArrayList<ScheduledClass> enrolledClasses =  user.getEnrolledClasses();
+        ClassType classType = ClassType.searchByClassName(class_name);
+        DocumentReference ref = DB.document("/class_types/" + classType.id);
+        QuerySnapshot task = Tasks.await(DB.collection("scheduled_classes").whereEqualTo("class_type", ref).get());
+        ArrayList<ScheduledClass> class_list = new ArrayList<ScheduledClass>();
+        for (DocumentSnapshot document : task.getDocuments()) {
+            ScheduledClass potential_class = createUsingReference(document);
+            boolean flag = false;
+            for(ScheduledClass enrolledClass : enrolledClasses){
+                if(enrolledClass.id.equals(potential_class.id)){
+                    flag = true;
+                }
+            }
+            if(!flag){
+                class_list.add(createUsingReference(document));
+            }
+        }
+        return class_list;
+    }
     // returns a scheduled class from its class type and day of the week
     public static ScheduledClass searchByClassTypeNameAndDayOfTheWeek(String class_name, String day_of_the_week) throws ExecutionException, InterruptedException {
         ClassType classType = ClassType.searchByClassName(class_name);
@@ -144,5 +166,32 @@ public class ScheduledClass extends Model.ModelHack {
             return null;
         }
         return createUsingReference(documents.get(0));
+    }
+
+    public static ArrayList<ScheduledClass> searchByDayOfTheWeek(String day_of_the_week) throws ExecutionException, InterruptedException {
+        QuerySnapshot task = Tasks.await(DB.collection("scheduled_classes").whereEqualTo("day_of_the_week", day_of_the_week).get());
+        ArrayList<ScheduledClass> class_list = new ArrayList<ScheduledClass>();
+        for (DocumentSnapshot document : task.getDocuments()) {
+            class_list.add(createUsingReference(document));
+        }
+        return class_list;
+    }
+    public static ArrayList<ScheduledClass> searchByDayOfTheWeek(String day_of_the_week, User user) throws ExecutionException, InterruptedException {
+        ArrayList<ScheduledClass> enrolledClasses =  user.getEnrolledClasses();
+        QuerySnapshot task = Tasks.await(DB.collection("scheduled_classes").whereEqualTo("day_of_the_week", day_of_the_week).get());
+        ArrayList<ScheduledClass> class_list = new ArrayList<ScheduledClass>();
+        for (DocumentSnapshot document : task.getDocuments()) {
+            ScheduledClass potential_class = createUsingReference(document);
+            boolean flag = false;
+            for(ScheduledClass enrolledClass : enrolledClasses){
+                if(enrolledClass.id.equals(potential_class.id)){
+                    flag = true;
+                }
+            }
+            if(!flag){
+                class_list.add(createUsingReference(document));
+            }
+        }
+        return class_list;
     }
 }
