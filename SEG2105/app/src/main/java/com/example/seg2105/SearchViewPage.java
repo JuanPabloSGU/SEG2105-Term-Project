@@ -56,10 +56,11 @@ public class SearchViewPage extends AppCompatActivity {
         }
         else if(which_page.equals("instructor")) {
             classes = ScheduledClass.searchByInstructorUsername(bundle.getString("search_page_instructor_username"));
+            System.out.println("test");
         }
         else if(which_page.equals("class_type")) {
             if(current_user.getRole().getName().equals("member")){
-                classes = ScheduledClass.searchByClassTypeName(bundle.getString("search_page_class_type_name"), current_user);
+                classes = ScheduledClass.searchByClassTypeName(bundle.getString("search_page_class_type_name"));
 
             } else {
                 classes = ScheduledClass.searchByClassTypeName(bundle.getString("search_page_class_type_name"));
@@ -68,7 +69,7 @@ public class SearchViewPage extends AppCompatActivity {
         }
         else if(which_page.equals("day")) {
             if(current_user.getRole().getName().equals("member")){
-                classes = ScheduledClass.searchByDayOfTheWeek(bundle.getString("search_page_class_day_of_the_week"), current_user);
+                classes = ScheduledClass.searchByDayOfTheWeek(bundle.getString("search_page_class_day_of_the_week"));
 
             } else {
                 classes = ScheduledClass.searchByDayOfTheWeek(bundle.getString("search_page_class_day_of_the_week"));
