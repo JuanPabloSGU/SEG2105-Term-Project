@@ -67,7 +67,8 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
                             public void onSuccess() {
 
                                 Toast.makeText(view.getContext(), "Class successfully joined!", Toast.LENGTH_SHORT).show();
-
+                                
+                                current_user.joinClass(scheduledClass, this);
                             }
 
                             @Override

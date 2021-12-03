@@ -86,11 +86,7 @@
             android:exported="false"
             android:parentActivityName=".Member"
             />
-        <activity
-            android:name=".ViewEnrolled"
-            android:exported="false"
-            android:parentActivityName=".Member"
-            />
+
         <activity
             android:name=".MemberSearchDayPage"
             android:exported="false"

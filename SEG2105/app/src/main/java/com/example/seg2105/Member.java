@@ -28,7 +28,10 @@ public class Member extends AppCompatActivity {
         view_enroll_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(Member.this, ViewEnrolled.class);
+                Intent intent = new Intent(Member.this, SearchViewPage.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("search_page", "enrolled");
+                intent.putExtras(bundle);
                 Member.this.startActivity(intent);
             }
         });
