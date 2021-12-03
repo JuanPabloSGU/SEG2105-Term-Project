@@ -74,12 +74,18 @@ public class CreateScheduledClass extends AppCompatActivity {
 // Apply the adapter to the spinner
         spinner2.setAdapter(adapter2);
 
+        Spinner time_spinner = (Spinner) findViewById(R.id.spinner5);
+        ArrayAdapter<CharSequence> time_adapter = ArrayAdapter.createFromResource(this, R.array.time_interval, android.R.layout.simple_spinner_item);
+        time_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        time_spinner.setAdapter(time_adapter);
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         String day_of_the_week = ((Spinner) findViewById(R.id.spinner2)).getSelectedItem().toString();
         String difficulty = ((Spinner) findViewById(R.id.spinner4)).getSelectedItem().toString();
+        String time = ((Spinner) findViewById(R.id.spinner5)).getSelectedItem().toString();
 
         User current_user = User.getCurrentUser();
 
@@ -135,7 +141,7 @@ public class CreateScheduledClass extends AppCompatActivity {
                             System.out.println("CLASS NAME: " + class_name);
                             System.out.println("CURRENT USER ID: " + current_user.getId());
                             ClassType class_type = ClassType.searchByClassName(class_name);
-                            ScheduledClass.create(day_of_the_week,capacityOfClass, difficulty,current_user,class_type, cb); // creates the class
+                            ScheduledClass.create(day_of_the_week,capacityOfClass, difficulty,current_user,class_type, time,  cb); // creates the class
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
