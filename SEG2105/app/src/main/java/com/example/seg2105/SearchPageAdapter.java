@@ -66,7 +66,7 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
                             @Override
                             public void onSuccess() {
 
-                                Toast.makeText(view.getContext(), "Class successfully deleted!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(view.getContext(), "Class successfully joined!", Toast.LENGTH_SHORT).show();
 
                             }
 
