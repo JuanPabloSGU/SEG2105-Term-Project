@@ -1,5 +1,6 @@
 package com.example.seg2105;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -8,10 +9,16 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -38,7 +45,7 @@ public class instructorFunctionalityTest {
     }
 
     @Test
-    public void addClass() {
+    public void teachClass() {
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
 
@@ -49,103 +56,102 @@ public class instructorFunctionalityTest {
         onView(withId(R.id.login)).perform(click());
         timeout();
 
+        timeout();
         onView(withId(R.id.cont)).perform(click());
+
+        onView(withId(R.id.create_scheduled_class)).perform(click());
         timeout();
 
-        onView(withId(R.id.addClass)).perform(click());
+        onView(withId(R.id.spinner3)).perform(click());
         timeout();
 
-        //Creating a new Class
-        onView(withId(R.id.userID)).perform(typeText("testInstructor"), click(), closeSoftKeyboard());
-        onView(withId(R.id.nameOfClass)).perform(typeText("testClass"), click(), closeSoftKeyboard());
-        onView(withId(R.id.descriptionClass)).perform(typeText("test description"), click(), closeSoftKeyboard());
-        onView(withId(R.id.day)).perform(typeText("10"), click(), closeSoftKeyboard());
-        onView(withId(R.id.capacity)).perform(typeText("30"), click(), closeSoftKeyboard());
+        onData(allOf(is(instanceOf(String.class)), is("tennis"))).perform(click());
+        // Clicked the Tennis class
 
-        onView(withId(R.id.createClassButton)).perform(click());
+        timeout();
 
-        // Go back home
-        onView(Matchers.allOf(withContentDescription("Navigate up"), isDisplayed())).perform(click());
+        // Select the day to teach
+        timeout();
+        onView(withId(R.id.spinner2)).perform(click());
+
+        onData(allOf(is(instanceOf(String.class)), is("Monday"))).perform(click());
+
+        // Select the difficulty
+        timeout();
+        onView(withId(R.id.spinner4)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Intermediate"))).perform(click());
+
+        // Enter capacity of the class
+        onView(withId(R.id.capacity)).perform(typeText(String.valueOf("30")));
+
+        onView(withId(R.id.createScheduledClassButton)).perform(click());
     }
 
-    @Test
-    public void viewClasses() {
-        // Now seeing if our account was created
-        onView(withId(R.id.SignIn)).perform(click());
-
-        // Input information
-        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
-        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
-
-        onView(withId(R.id.login)).perform(click());
-        timeout();
-
-        onView(withId(R.id.cont)).perform(click());
-        timeout();
-
-        onView(withId(R.id.viewClasses)).perform(click());
-        timeout();
-        timeout();
-        timeout();
-
-    }
-
-    @Test
-    public void deleteOtherClasses() throws ExecutionException, InterruptedException {
-
-        // Now seeing if our account was created
-        onView(withId(R.id.SignIn)).perform(click());
-
-        // Input information
-        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
-        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
-
-        onView(withId(R.id.login)).perform(click());
-        timeout();
-
-        onView(withId(R.id.cont)).perform(click());
-        timeout();
-
-        onView(withId(R.id.viewClasses)).perform(click());
-        timeout();
-        timeout();
-        timeout();
-
-        // This will gather all of the classes and this won't delete the other classes
-        // this needs to be reimplemented
-//        ArrayList<ClassType> class_types = ClassType.getAllClassTypes();
-//        for(ClassType class_type : class_types){
-//            class_type.delete();
-//        }
-
-    }
-
-    @Test
-    public void deleteOurClasses() throws ExecutionException, InterruptedException {
-
-        // Now seeing if our account was created
-        onView(withId(R.id.SignIn)).perform(click());
-
-        // Input information
-        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
-        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
-
-        onView(withId(R.id.login)).perform(click());
-        timeout();
-
-        onView(withId(R.id.cont)).perform(click());
-        timeout();
-
-        onView(withId(R.id.viewClasses)).perform(click());
-        timeout();
-        timeout();
-        timeout();
-
-        // This will gather all of the classes and this won't delete the other classes
-        // This should only delete the classes that the instructor has
-//        ArrayList<ClassTypes> class_types = ClassTypes.searchByInstructor("testInstructor");
-//        for(ClassTypes class_type : class_types){
-//            class_type.delete();
-//        }
-    }
+//    @Test
+//    public void viewClasses() {
+//        // Now seeing if our account was created
+//        onView(withId(R.id.SignIn)).perform(click());
+//
+//        // Input information
+//        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
+//        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
+//
+//        onView(withId(R.id.login)).perform(click());
+//        timeout();
+//
+//        onView(withId(R.id.cont)).perform(click());
+//        timeout();
+//
+//        onView(withId(R.id.viewClasses)).perform(click());
+//        timeout();
+//        timeout();
+//        timeout();
+//
+//    }
+//
+//    @Test
+//    public void deleteOtherClasses() throws ExecutionException, InterruptedException {
+//
+//        // Now seeing if our account was created
+//        onView(withId(R.id.SignIn)).perform(click());
+//
+//        // Input information
+//        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
+//        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
+//
+//        onView(withId(R.id.login)).perform(click());
+//        timeout();
+//
+//        onView(withId(R.id.cont)).perform(click());
+//        timeout();
+//
+//        onView(withId(R.id.viewClasses)).perform(click());
+//        timeout();
+//        timeout();
+//        timeout();
+//
+//    }
+//
+//    @Test
+//    public void deleteOurClasses() throws ExecutionException, InterruptedException {
+//
+//        // Now seeing if our account was created
+//        onView(withId(R.id.SignIn)).perform(click());
+//
+//        // Input information
+//        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
+//        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
+//
+//        onView(withId(R.id.login)).perform(click());
+//        timeout();
+//
+//        onView(withId(R.id.cont)).perform(click());
+//        timeout();
+//
+//        onView(withId(R.id.viewClasses)).perform(click());
+//        timeout();
+//        timeout();
+//        timeout();
+//
+//    }
 }

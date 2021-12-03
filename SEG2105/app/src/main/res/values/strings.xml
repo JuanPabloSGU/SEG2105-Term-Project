@@ -21,4 +21,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_create_scheduled_class">CreateScheduledClass</string>
+    <string name="teach_class">Teach Class</string>
+    <string name="search_by_instructor_name">Search By Instructor Name</string>
+    <string name="search_by_class_name">Search By Class Name</string>
+    <string name="search_schedule_classes">Search Schedule Classes</string>
 </resources>

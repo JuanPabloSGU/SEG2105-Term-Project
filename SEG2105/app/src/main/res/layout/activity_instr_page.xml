@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Teach Class"
+            android:text="@string/teach_class"
             android:id="@+id/create_scheduled_class"
             />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Search By Instructor Name" />
+            android:text="@string/search_by_instructor_name" />
 
         <Button
             android:id="@+id/SearchByClass"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Search By Class Name" />
+            android:text="@string/search_by_class_name" />
 
         <Button
             android:id="@+id/SearchAll"
@@ -47,6 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Search Schedule Classes" />
+            android:text="@string/search_schedule_classes" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
