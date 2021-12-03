@@ -21,26 +21,28 @@ public class ScheduledClass extends Model.ModelHack {
     public int capacity;
     public String difficulty;
     public ClassType class_type;
+    public String time;
 
-    public ScheduledClass(String id, String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type){
+    public ScheduledClass(String id, String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, String time){
         this.id = id;
         this.day_of_the_week = day_of_the_week;
         this.capacity = capacity;
         this.difficulty = difficulty;
         this.instructor = instructor;
         this.class_type = class_type;
+        this.time = time;
     }
     // creates and returns a static scheduled class , with the custom callback (FOR ADMINS)
-    public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, customCallback cb) throws ExecutionException, InterruptedException {
-        return ScheduledClass.genericCreate(day_of_the_week, capacity, difficulty,  instructor, class_type, cb);
+    public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, String time, customCallback cb) throws ExecutionException, InterruptedException {
+        return ScheduledClass.genericCreate(day_of_the_week, capacity, difficulty,  instructor, class_type, time, cb);
     }
     // creates and returns scheduled class that an instructor is using
-    public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, String instructor_user_id, ClassType class_type, customCallback cb) throws ExecutionException, InterruptedException {
+    public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, String instructor_user_id, ClassType class_type, String time, customCallback cb) throws ExecutionException, InterruptedException {
         User instructor = User.getUserByUserId(instructor_user_id);
-        return ScheduledClass.genericCreate(day_of_the_week, capacity, difficulty,  instructor, class_type, cb);
+        return ScheduledClass.genericCreate(day_of_the_week, capacity, difficulty,  instructor, class_type, time, cb);
     }
     // generically creates a scheduled class
-    private static ScheduledClass genericCreate(String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, customCallback cb) throws ExecutionException, InterruptedException {
+    private static ScheduledClass genericCreate(String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, String time , customCallback cb) throws ExecutionException, InterruptedException {
         if(searchByClassTypeNameAndDayOfTheWeek(class_type.name, day_of_the_week) != null){
             cb.onError("class already exists");
             return null;
@@ -53,9 +55,10 @@ public class ScheduledClass extends Model.ModelHack {
             data1.put("instructor", instructor_reference);
             DocumentReference class_type_reference =  DB.document("/class_types/" + class_type.id);
             data1.put("class_type", class_type_reference);
+            data1.put("time" , time);
             DocumentReference result = Tasks.await(DB.collection(COLLECTION_NAME).add(data1)); // throws into Database
             cb.onSuccess();
-            return new ScheduledClass(result.getId(), day_of_the_week, capacity, difficulty,  instructor, class_type);
+            return new ScheduledClass(result.getId(), day_of_the_week, capacity, difficulty,  instructor, class_type, time);
         }
     }
     // returns a list of all the scheduled classes
@@ -84,6 +87,7 @@ public class ScheduledClass extends Model.ModelHack {
         String day_of_the_week = document.get("day_of_the_week").toString();
         String difficulty = document.get("difficulty").toString();
         int capacity = Integer.parseInt(document.get("capacity").toString());
+        String time_of_the_day = document.get("time").toString();
 
         DocumentSnapshot instructor_reference = Tasks.await(document.getDocumentReference("instructor").get());
         User instructor = User.createUsingReference(instructor_reference);
@@ -91,7 +95,7 @@ public class ScheduledClass extends Model.ModelHack {
         DocumentSnapshot class_type_reference = Tasks.await(document.getDocumentReference("class_type").get());
         ClassType class_type = ClassType.createUsingReference(class_type_reference);
 
-        return new ScheduledClass(document.getId(), day_of_the_week, capacity, difficulty, instructor, class_type);
+        return new ScheduledClass(document.getId(), day_of_the_week, capacity, difficulty, instructor, class_type, time_of_the_day);
     }
 
     // deletes a schedule class
