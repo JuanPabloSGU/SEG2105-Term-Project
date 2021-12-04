@@ -41,9 +41,6 @@ public class CreateClasses extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         EditText nameOfClass = (EditText) findViewById(R.id.nameOfClass);
         EditText descriptionOfClass = (EditText) findViewById(R.id.descriptionClass);
-        EditText dayOfClass = (EditText) findViewById(R.id.day);
-        EditText capacityOfClass = (EditText) findViewById(R.id.capacity);
-        EditText userID = (EditText) findViewById(R.id.userID);
 
         createClassButton = findViewById(R.id.createClassButton);
         createClassButton.setOnClickListener(new View.OnClickListener() {
@@ -54,13 +51,17 @@ public class CreateClasses extends AppCompatActivity {
                     @Override
                     public void run() {
                         try { // throws if nothing is submitted
-                            int capacityOfTheClass = Integer.parseInt(capacityOfClass.getText().toString());
-                            if (nameOfClass.getText().toString() == "" || descriptionOfClass.getText().toString() == "") {
-                                throw new IllegalStateException();
-                            }
 
                             
                             ClassType.create(nameOfClass.getText().toString(), descriptionOfClass.getText().toString());
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(CreateClasses.this, "Class created successfully!", Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
 
 
                         } catch (ExecutionException e) {

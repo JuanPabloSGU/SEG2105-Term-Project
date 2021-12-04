@@ -1,5 +1,7 @@
 package com.example.seg2105;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -110,11 +112,36 @@ public class User extends Model.ModelHack {
         DocumentReference user_reference = DB.document("/users/" + this.getId());
         DocumentReference scheduled_class_reference = DB.document("/scheduled_classes/" + scheduledClass.id);
 
+
+
         data1.put("user", user_reference);
         data1.put("scheduled_class", scheduled_class_reference);
         new Thread(new Runnable() {
             @Override
             public void run() {
+                boolean flag = true;
+                try {
+                    System.out.println("here");
+                    ArrayList<ScheduledClass> alrEnrolled = current_user.getEnrolledClasses();
+                    for (int i = 0; i < alrEnrolled.size(); i++) {
+                        ScheduledClass temp = alrEnrolled.get(i);
+                        if (temp.day_of_the_week.equals(scheduledClass.day_of_the_week)) { //NOT FINISHED, TIME VAR NEEDED
+                            if (temp.time.equals(scheduledClass.time)) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                    }
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (!flag) {
+                    cb.onError("Error: Overlap in classes!");
+                    return;
+                }
                 System.out.println("calling");
                 DB.collection("joined_classes").add(data1).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

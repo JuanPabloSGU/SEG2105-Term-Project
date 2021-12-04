@@ -17,17 +17,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/userID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Please Enter Your Username"
-            android:inputType="textPersonName"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:minHeight="48dp" />
-
-        <EditText
             android:id="@+id/nameOfClass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,28 +34,6 @@
             android:ems="10"
             android:hint="Please Enter the Description of the Class"
             android:inputType="textPersonName"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/day"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Please Enter the Day of the Class"
-            android:inputType="number"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/capacity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Please enter the Capacity of the Class"
-            android:inputType="number"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:minHeight="48dp" />
