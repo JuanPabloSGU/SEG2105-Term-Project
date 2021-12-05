@@ -1,5 +1,6 @@
 package com.example.seg2105;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -23,9 +24,11 @@ import java.util.concurrent.ExecutionException;
 public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.SearchPageAdapter.ViewHolder> {
 
         private List<ScheduledClass> user_list;
+        private Context context;
         //contains a list of all the current users
-        public SearchPageAdapter(List<ScheduledClass> user_list) {
+        public SearchPageAdapter(List<ScheduledClass> user_list, Context context) {
             this.user_list = user_list;
+            this.context = context;
         }
 
 
@@ -54,7 +57,7 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
             textView.setText("Class Type : " + scheduledClass.class_type.name + ", Instructor : " + scheduledClass.instructor.getUsername() + ", Day of the week: " + scheduledClass.day_of_the_week);
             Button button = holder.deleteButton;
             User current_user = User.getCurrentUser();
-            if(current_user.getRole().getName().equals("member")){
+            if(current_user.getRole().getName().equals("member") && User.getEnrollementStatus()){
                 button.setText("Join");
 
                 button.setOnClickListener(new View.OnClickListener() {
@@ -66,53 +69,76 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
 
                             @Override
                             public void onSuccess() {
-
-                                boolean flag = true;
-                                try {
-                                    ArrayList<ScheduledClass> alrEnrolled = current_user.getEnrolledClasses();
-                                    for(int i = 0; i < alrEnrolled.size(); i ++){
-                                        ScheduledClass temp = alrEnrolled.get(i);
-                                        if (temp.day_of_the_week.equals(scheduledClass.day_of_the_week) ){ //NOT FINISHED, TIME VAR NEEDED
-                                            if(temp.time.equals(scheduledClass.time)) {
-                                                Toast.makeText(view.getContext(), "Error: Overlap in classes!", Toast.LENGTH_SHORT).show();
-                                                flag = false;
-                                                break;
-                                            }
-                                        }
+                                ((Activity)context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                Toast.makeText(view.getContext(), "Class successfully joined!", Toast.LENGTH_SHORT).show();
+                                ((Activity)context).finish();
                                     }
+                                });
 
-                                } catch (ExecutionException e) {
-                                    e.printStackTrace();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                if( flag == true){
-                                    Toast.makeText(view.getContext(), "Class successfully joined!", Toast.LENGTH_SHORT).show();
-                                    current_user.joinClass(scheduledClass, this);
-                                }
 
                             }
+
+                            // pop up for error
+                            @Override
+                            public void onError(String err) {
+                                ((Activity)context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        };
+                        current_user.joinClass(scheduledClass, cb);
+
+                    };
+                });
+            }
+            else if(current_user.getRole().getName().equals("member") && !User.getEnrollementStatus()){
+                button.setText("Unenroll");
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        customCallback cb = new customCallback<ScheduledClass>() {
+
 
                             @Override
-                            public void onSuccess(Task<AuthResult> task) {
+                            public void onSuccess() {
+                                ((Activity)context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(view.getContext(), "Class successfully unenrolled!", Toast.LENGTH_SHORT).show();
+                                        ((Activity)context).finish();
+                                    }
+                                });
+
 
                             }
 
-                            @Override
-                            public void onError(Exception err) {
-
-                            }
                             // pop up for error
                             @Override
                             public void onError(String err) {
                                 Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
                             }
                         };
-
+                        try {
+                            current_user.leaveClass(scheduledClass, cb);
+                        } catch (ExecutionException e) {
+                            cb.onError("There was an issue unenrolling you");
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            cb.onError("There was an issue unenrolling you");
+                            e.printStackTrace();
+                        }
 
                     };
                 });
-            } else {
+            }
+            else {
                 button.setText("Delete");
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,19 +148,16 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
 
                             @Override
                             public void onSuccess() {
-                                Toast.makeText(view.getContext(), "Class successfully deleted!", Toast.LENGTH_SHORT).show();
+                                ((Activity)context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(view.getContext(), "Class successfully deleted!", Toast.LENGTH_SHORT).show();
+                                        ((Activity) context).finish();
+                                    }
+                                });
 
                             }
 
-                            @Override
-                            public void onSuccess(Task<AuthResult> task) {
-
-                            }
-
-                            @Override
-                            public void onError(Exception err) {
-
-                            }
                             // pop up for error
                             @Override
                             public void onError(String err) {

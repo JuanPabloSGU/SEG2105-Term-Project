@@ -99,7 +99,7 @@ public class SearchViewPage extends AppCompatActivity {
 //
 //                // Initialize contacts
 //                // Create adapter passing in the sample user data
-                SearchPageAdapter adapter = new SearchPageAdapter(classes);
+                SearchPageAdapter adapter = new SearchPageAdapter(classes, SearchViewPage.this);
 //                // Attach the adapter to the recyclerview to populate items
                 rvContacts.setAdapter(adapter);
 //                // Set layout manager to position the items
