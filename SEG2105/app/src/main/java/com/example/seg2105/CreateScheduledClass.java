@@ -97,7 +97,9 @@ public class CreateScheduledClass extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String class_name = ((Spinner) findViewById(R.id.spinner3)).getSelectedItem().toString();
-
+                String day_of_the_week = ((Spinner) findViewById(R.id.spinner2)).getSelectedItem().toString();
+                String time = ((Spinner) findViewById(R.id.spinner5)).getSelectedItem().toString();
+                String difficulty = ((Spinner) findViewById(R.id.spinner4)).getSelectedItem().toString();
                 Integer capacityOfClass =  Integer.parseInt(((EditText) findViewById(R.id.capacity)).getText().toString());
 
                 new Thread(new Runnable() {

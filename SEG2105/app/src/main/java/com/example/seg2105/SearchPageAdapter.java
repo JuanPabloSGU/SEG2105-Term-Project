@@ -67,16 +67,48 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
                             @Override
                             public void onSuccess() {
 
-                                Toast.makeText(view.getContext(), "Class successfully joined!", Toast.LENGTH_SHORT).show();
+                                boolean flag = true;
+                                try {
+                                    ArrayList<ScheduledClass> alrEnrolled = current_user.getEnrolledClasses();
+                                    for(int i = 0; i < alrEnrolled.size(); i ++){
+                                        ScheduledClass temp = alrEnrolled.get(i);
+                                        if (temp.day_of_the_week.equals(scheduledClass.day_of_the_week) ){ //NOT FINISHED, TIME VAR NEEDED
+                                            if(temp.time.equals(scheduledClass.time)) {
+                                                Toast.makeText(view.getContext(), "Error: Overlap in classes!", Toast.LENGTH_SHORT).show();
+                                                flag = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                if( flag == true){
+                                    Toast.makeText(view.getContext(), "Class successfully joined!", Toast.LENGTH_SHORT).show();
+                                    current_user.joinClass(scheduledClass, this);
+                                }
+
                             }
 
+                            @Override
+                            public void onSuccess(Task<AuthResult> task) {
+
+                            }
+
+                            @Override
+                            public void onError(Exception err) {
+
+                            }
                             // pop up for error
                             @Override
                             public void onError(String err) {
                                 Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
                             }
                         };
-                        current_user.joinClass(scheduledClass, cb);
+
 
                     };
                 });

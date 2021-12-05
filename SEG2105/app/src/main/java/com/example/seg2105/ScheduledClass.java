@@ -43,10 +43,18 @@ public class ScheduledClass extends Model.ModelHack {
     }
     // generically creates a scheduled class
     private static ScheduledClass genericCreate(String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, String time , customCallback cb) throws ExecutionException, InterruptedException {
-        if(searchByClassTypeNameAndDayOfTheWeek(class_type.name, day_of_the_week) != null){
-            cb.onError("class already exists");
-            return null;
-        } else {
+        ArrayList<ScheduledClass> classes = ScheduledClass.getAllScheduledClasses();
+        boolean flag = true;
+        for(int x=0;x<classes.size();x++){
+            ScheduledClass temp=classes.get(x);
+            if(temp.day_of_the_week.equals(day_of_the_week)){
+                if(temp.time.equals(time)){
+                    cb.onError("Class already exists");
+                    flag=false;
+                    return null;
+                }
+            }
+        } if(flag) {
             Map<String, Object> data1 = new HashMap<>();
             data1.put("day_of_the_week", day_of_the_week);
             data1.put("capacity", capacity);
@@ -60,6 +68,7 @@ public class ScheduledClass extends Model.ModelHack {
             cb.onSuccess();
             return new ScheduledClass(result.getId(), day_of_the_week, capacity, difficulty,  instructor, class_type, time);
         }
+        return null;
     }
     // returns a list of all the scheduled classes
     public static ArrayList<ScheduledClass> getAllScheduledClasses() throws ExecutionException, InterruptedException {
