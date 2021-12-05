@@ -51,7 +51,7 @@ public class instructorFunctionalityTest {
         }
     }
 
-    //@Test
+    @Test
     public void teachClass() {
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
@@ -99,7 +99,7 @@ public class instructorFunctionalityTest {
         onView(withId(R.id.createScheduledClassButton)).perform(click());
     }
 
-    //Test
+    @Test
     public void searchClassByInstructor() {
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
@@ -131,7 +131,7 @@ public class instructorFunctionalityTest {
         onView(withId(R.id.SearchInstr)).perform(click());
     }
 
-    //@Test
+    @Test
     public void searchByClassName() {
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
@@ -162,7 +162,7 @@ public class instructorFunctionalityTest {
         timeout();
     }
 
-    //@Test
+    @Test
     public void searchScheduleClasses() {
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
@@ -202,13 +202,9 @@ public class instructorFunctionalityTest {
         timeout();
         timeout();
 
-        
         onData(withId(R.id.search_recycler_view))
                 .atPosition(0).onChildView(withText("DELETE"))
                 .perform(click());
 
     }
-
-
-
 }
