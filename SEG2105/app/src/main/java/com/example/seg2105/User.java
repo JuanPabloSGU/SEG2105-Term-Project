@@ -28,6 +28,7 @@ public class User extends Model.ModelHack {
     private static String COLLECTION_NAME = "users";
     private String id;
     private static User current_user;
+    private static boolean enrollement_status;
     private Role role;
     private String email;
     private String user_id;
@@ -105,6 +106,37 @@ public class User extends Model.ModelHack {
 
     public Role getRole(){
         return this.role;
+    }
+
+    public void leaveClass(ScheduledClass scheduledClass, customCallback cb) throws ExecutionException, InterruptedException {
+        System.out.println(scheduledClass.id);
+        System.out.println(this.id);
+        DocumentReference scheduledClass_reference = DB.document("/scheduled_classes/" + scheduledClass.id);
+        DocumentReference user_reference = DB.document("/users/" + this.id);
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                QuerySnapshot classes_to_delete = null;
+                try {
+                    System.out.println(scheduledClass_reference);
+                    System.out.println(user_reference);
+                    classes_to_delete = Tasks.await(DB.collection("joined_classes").whereEqualTo("scheduled_class", scheduledClass_reference).whereEqualTo("user", user_reference).get());
+                    Tasks.await(DB.collection("joined_classes").document(classes_to_delete.getDocuments().get(0).getId()).delete());
+                    cb.onSuccess();
+
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }).start();
+
+
     }
 
     public void joinClass(ScheduledClass scheduledClass, customCallback cb) {
@@ -225,5 +257,11 @@ public class User extends Model.ModelHack {
         return User.current_user;
     }
 
+    public static boolean getEnrollementStatus(){
+        return User.enrollement_status;
+    }
+    public static void setEnrollementStatus(boolean status){
+        User.enrollement_status = status;
+    }
 
 }

@@ -16,6 +16,7 @@ public class Member extends AppCompatActivity {
         viewClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                User.setEnrollementStatus(true);
                 Intent intent = new Intent(Member.this, SearchViewPage.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("search_page", "all");
@@ -28,6 +29,7 @@ public class Member extends AppCompatActivity {
         view_enroll_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                User.setEnrollementStatus(false);
                 Intent intent = new Intent(Member.this, SearchViewPage.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("search_page", "enrolled");
@@ -40,6 +42,8 @@ public class Member extends AppCompatActivity {
         view_joinclass.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                User.setEnrollementStatus(true);
+
                 Intent intent = new Intent(Member.this, JoinClass.class);
                 Member.this.startActivity(intent);
             }
