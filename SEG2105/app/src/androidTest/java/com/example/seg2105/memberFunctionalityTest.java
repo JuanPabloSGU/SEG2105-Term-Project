@@ -50,7 +50,7 @@ public class memberFunctionalityTest {
         onView(withId(R.id.SignIn)).perform(click());
 
         // Input information
-        onView(withId(R.id.user_name)).perform(typeText("testMember"), click());
+        onView(withId(R.id.user_name)).perform(typeText("testMemberShip"), click());
         onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
 
         onView(withId(R.id.login)).perform(click());
@@ -58,6 +58,63 @@ public class memberFunctionalityTest {
 
         timeout();
         onView(withId(R.id.cont)).perform(click());
+    }
+
+    @Test
+    public void viewClasses() {
+        // Now seeing if our account was created
+        onView(withId(R.id.SignIn)).perform(click());
+
+        // Input information
+        onView(withId(R.id.user_name)).perform(typeText("testMemberShip"), click());
+        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
+
+        onView(withId(R.id.login)).perform(click());
+        timeout();
+
+        timeout();
+        onView(withId(R.id.cont)).perform(click());
+
+        timeout();
+        onView(withId(R.id.MemViewClasses)).perform(click());
+    }
+
+    @Test
+    public void joinAClass(){
+        // Now seeing if our account was created
+        onView(withId(R.id.SignIn)).perform(click());
+
+        // Input information
+        onView(withId(R.id.user_name)).perform(typeText("testMemberShip"), click());
+        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
+
+        onView(withId(R.id.login)).perform(click());
+        timeout();
+
+        timeout();
+        onView(withId(R.id.cont)).perform(click());
+
+        timeout();
+        onView(withId(R.id.JoinClass)).perform(click());
+    }
+
+    @Test
+    public void viewEnrolledClasses(){
+        // Now seeing if our account was created
+        onView(withId(R.id.SignIn)).perform(click());
+
+        // Input information
+        onView(withId(R.id.user_name)).perform(typeText("testMemberShip"), click());
+        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
+
+        onView(withId(R.id.login)).perform(click());
+        timeout();
+
+        timeout();
+        onView(withId(R.id.cont)).perform(click());
+
+        timeout();
+        onView(withId(R.id.ViewEnrolled)).perform(click());
     }
 
 }

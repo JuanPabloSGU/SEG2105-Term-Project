@@ -29,7 +29,7 @@ public class signUpTest {
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
 
-    @Test
+    //@Test
     public void instructorSignUp(){
 
         onView(withId(R.id.SignUp)).perform(click());
@@ -60,8 +60,8 @@ public class signUpTest {
 
         onView(withId(R.id.SignUp)).perform(click());
 
-        onView(withId(R.id.username)).perform(typeText("testMember"), click());
-        onView(withId(R.id.email)).perform(typeText("test3@gmail.com"), click());
+        onView(withId(R.id.username)).perform(typeText("testMemberShip"), click());
+        onView(withId(R.id.email)).perform(typeText("test4@gmail.com"), click());
         onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
 
         onView(withId(R.id.gymMember_button)).perform(click());
@@ -75,8 +75,8 @@ public class signUpTest {
         onView(withId(R.id.SignIn)).perform(click());
 
         // Input information
-        onView(withId(R.id.user_name)).perform(typeText("testMember"), click());
-        onView(withId(R.id.password)).perform(typeText("password1234"), click());
+        onView(withId(R.id.user_name)).perform(typeText("testMemberShip"), click(), closeSoftKeyboard());
+        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
 
         onView(withId(R.id.login)).perform(click());
     }
