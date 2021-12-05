@@ -87,25 +87,21 @@ public class instructorFunctionalityTest {
         onView(withId(R.id.createScheduledClassButton)).perform(click());
     }
 
-//    @Test
-//    public void viewClasses() {
-//        // Now seeing if our account was created
-//        onView(withId(R.id.SignIn)).perform(click());
-//
-//        // Input information
-//        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
-//        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
-//
-//        onView(withId(R.id.login)).perform(click());
-//        timeout();
-//
-//        onView(withId(R.id.cont)).perform(click());
-//        timeout();
-//
-//        onView(withId(R.id.viewClasses)).perform(click());
-//        timeout();
-//        timeout();
-//        timeout();
+    @Test
+    public void viewClassesOfInstructor() {
+        // Now seeing if our account was created
+        onView(withId(R.id.SignIn)).perform(click());
+
+        // Input information
+        onView(withId(R.id.user_name)).perform(typeText("testInstructor"), click());
+        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
+
+        onView(withId(R.id.login)).perform(click());
+        timeout();
+
+        timeout();
+        onView(withId(R.id.cont)).perform(click());
+    }
 //
 //    }
 //
