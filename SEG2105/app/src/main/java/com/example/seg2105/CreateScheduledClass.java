@@ -144,7 +144,7 @@ public class CreateScheduledClass extends AppCompatActivity {
                             System.out.println("CLASS NAME: " + class_name);
                             System.out.println("CURRENT USER ID: " + current_user.getId());
                             ClassType class_type = ClassType.searchByClassName(class_name);
-                            ScheduledClass.create(day_of_the_week,capacityOfClass, difficulty,current_user,class_type, time, current_capacity, cb); // creates the class
+                            ScheduledClass.create(day_of_the_week,capacityOfClass, difficulty,current_user,class_type, time, 0,  cb); // creates the class
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {

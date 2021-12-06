@@ -66,6 +66,7 @@ public class ScheduledClass extends Model.ModelHack {
             DocumentReference class_type_reference =  DB.document("/class_types/" + class_type.id);
             data1.put("class_type", class_type_reference);
             data1.put("time" , time);
+            data1.put("current_capacity", current_capacity);
             DocumentReference result = Tasks.await(DB.collection(COLLECTION_NAME).add(data1)); // throws into Database
             cb.onSuccess();
             return new ScheduledClass(result.getId(), day_of_the_week, capacity, difficulty,  instructor, class_type, time, current_capacity);
