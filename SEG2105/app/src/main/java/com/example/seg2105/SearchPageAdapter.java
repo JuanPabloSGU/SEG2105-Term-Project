@@ -162,7 +162,12 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
                             // pop up for error
                             @Override
                             public void onError(String err) {
-                                Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
+                                ((Activity)context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(view.getContext(), err, Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         };
                         try {

@@ -124,6 +124,7 @@ public class User extends Model.ModelHack {
                     System.out.println(user_reference);
                     classes_to_delete = Tasks.await(DB.collection("joined_classes").whereEqualTo("scheduled_class", scheduledClass_reference).whereEqualTo("user", user_reference).get());
                     Tasks.await(DB.collection("joined_classes").document(classes_to_delete.getDocuments().get(0).getId()).delete());
+                    scheduledClass.decrementCapacity();
                     cb.onSuccess();
 
                 } catch (ExecutionException e) {
@@ -164,6 +165,7 @@ public class User extends Model.ModelHack {
                             }
                         }
                     }
+                    scheduledClass.incrementCapacity();
 
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -188,6 +190,7 @@ public class User extends Model.ModelHack {
 
                     }
                 });
+
             }
         }).start();
     }
