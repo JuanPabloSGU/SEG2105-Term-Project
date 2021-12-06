@@ -55,7 +55,7 @@ public class SearchPageAdapter extends RecyclerView.Adapter<com.example.seg2105.
             // Set item views based on your views and data model
 
             TextView textView = holder.nameTextView;
-            textView.setText("Class Type : " + scheduledClass.class_type.name + ", Instructor : " + scheduledClass.instructor.getUsername() + ", Day of the week: " + scheduledClass.day_of_the_week +", Difficulty: "+scheduledClass.difficulty+", Capacity: "+scheduledClass.capacity+" Desc. " +scheduledClass.class_type.description);
+            textView.setText("Class Type : " + scheduledClass.class_type.name + ", Instructor : " + scheduledClass.instructor.getUsername() + ", Day of the week: " + scheduledClass.day_of_the_week + ", Time: " + scheduledClass.time +", Difficulty: "+scheduledClass.difficulty+", Capacity: "+scheduledClass.capacity+" Desc. " +scheduledClass.class_type.description);
             Button button = holder.deleteButton;
             User current_user = User.getCurrentUser();
             if(current_user.getRole().getName().equals("member") && User.getEnrollementStatus()){
