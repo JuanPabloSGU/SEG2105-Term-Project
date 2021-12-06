@@ -38,6 +38,16 @@ public class ScheduledClass extends Model.ModelHack {
     public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, User instructor, ClassType class_type, String time, int current_capacity, customCallback cb) throws ExecutionException, InterruptedException {
         return ScheduledClass.genericCreate(day_of_the_week, capacity, difficulty,  instructor, class_type, time, current_capacity, cb);
     }
+
+    public void incrementCapacity() throws ExecutionException, InterruptedException {
+        Tasks.await(DB.collection("scheduled_classes").document(this.id).update("current_capacity", this.current_capacity + 1));
+    }
+
+    public void decrementCapacity() throws ExecutionException, InterruptedException {
+        Tasks.await(DB.collection("scheduled_classes").document(this.id).update("current_capacity", this.current_capacity - 1));
+
+    }
+
     // creates and returns scheduled class that an instructor is using
     public static ScheduledClass create(String day_of_the_week, int capacity, String difficulty, String instructor_user_id, ClassType class_type, String time, int current_capacity, customCallback cb) throws ExecutionException, InterruptedException {
         User instructor = User.getUserByUserId(instructor_user_id);
@@ -49,7 +59,7 @@ public class ScheduledClass extends Model.ModelHack {
         boolean flag = true;
         for(int x=0;x<classes.size();x++){
             ScheduledClass temp=classes.get(x);
-            if(temp.day_of_the_week.equals(day_of_the_week) && instructor.equals(temp.instructor)){
+            if(temp.day_of_the_week.equals(day_of_the_week) && instructor.getId().equals(temp.instructor.getId())){
                 if(temp.time.equals(time)){
                     cb.onError("Class already exists");
                     flag=false;
@@ -118,16 +128,36 @@ public class ScheduledClass extends Model.ModelHack {
     }
     // deletes a schedule class using for custom callback
     public void delete(customCallback cb) throws ExecutionException, InterruptedException {
+
         internalDelete(this, cb);
     }
     // internally deletes a schedule class from the database
-    private static void internalDelete(ScheduledClass scheduled_class_to_delete, customCallback cb){
-        if(scheduled_class_to_delete.instructor.getId().equals(User.getCurrentUser().getId())){
-            DB.collection(COLLECTION_NAME).document(scheduled_class_to_delete.id).delete();
-            cb.onSuccess();
-        } else {
-            cb.onError("You must be the instructor of this class in order to delete it");
-        }
+    private static void internalDelete(ScheduledClass scheduled_class_to_delete, customCallback cb)  {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                if (scheduled_class_to_delete.instructor.getId().equals(User.getCurrentUser().getId())) {
+                    DocumentReference ref = DB.document("/scheduled_classes/" + scheduled_class_to_delete.id);
+
+                    QuerySnapshot joined_classes_to_delete = Tasks.await(DB.collection("joined_classes").whereEqualTo("scheduled_class", ref).get());
+                    for (DocumentSnapshot document : joined_classes_to_delete.getDocuments()) {
+
+                            Tasks.await(DB.collection("joined_classes").document(document.getId()).delete());
+
+                    }
+                    Tasks.await(DB.collection(COLLECTION_NAME).document(scheduled_class_to_delete.id).delete());
+                    cb.onSuccess();
+                } else {
+                    cb.onError("You must be the instructor of this class in order to delete it");
+                }
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     // returns a list of all schedule classes under a instructors username
