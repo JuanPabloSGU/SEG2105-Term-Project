@@ -5,13 +5,12 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+
+import android.view.View;
 
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.CoordinatesProvider;
@@ -21,24 +20,9 @@ import androidx.test.espresso.action.Tap;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
-
-import android.view.View;
-
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 @RunWith(AndroidJUnit4.class)
 public class memberFunctionalityTest {
@@ -116,6 +100,9 @@ public class memberFunctionalityTest {
         onView(withId(R.id.SearchClass)).perform(click());
 
         timeout();
+
+        clickXY(782, 28);
+        timeout();
     }
 
     @Test
@@ -152,6 +139,10 @@ public class memberFunctionalityTest {
         onView(withId(R.id.SearchClass)).perform(click());
 
         timeout();
+
+        clickXY(782, 28);
+
+        timeout();
     }
 
     @Test
@@ -174,6 +165,10 @@ public class memberFunctionalityTest {
 
         timeout();
         timeout();
+        timeout();
+
+        clickXY(782, 28);
+
         timeout();
 
     }
@@ -200,12 +195,9 @@ public class memberFunctionalityTest {
         timeout();
         timeout();
 
-        onData(anything()).inAdapterView(withContentDescription(2131296444))
-                .atPosition(0).perform(click());
+        clickXY(782, 28);
 
-//        onView(isRoot()).perform(clickXY(790,45));
-//
-//        timeout();
+        timeout();
     }
 
     public static ViewAction clickXY(final int x, final int y){

@@ -122,6 +122,8 @@ public class instructorFunctionalityTest {
         timeout();
 
         onView(withId(R.id.SearchInstr)).perform(click());
+
+        timeout();
     }
 
     @Test
