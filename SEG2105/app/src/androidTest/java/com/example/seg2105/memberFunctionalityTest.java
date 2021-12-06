@@ -45,22 +45,6 @@ public class memberFunctionalityTest {
     }
 
     @Test
-    public void memberSignIn(){
-        // Now seeing if our account was created
-        onView(withId(R.id.SignIn)).perform(click());
-
-        // Input information
-        onView(withId(R.id.user_name)).perform(typeText("testMemberShip"), click());
-        onView(withId(R.id.password)).perform(typeText("password1234"), click(), closeSoftKeyboard());
-
-        onView(withId(R.id.login)).perform(click());
-        timeout();
-
-        timeout();
-        onView(withId(R.id.cont)).perform(click());
-    }
-
-    @Test
     public void viewClasses() {
         // Now seeing if our account was created
         onView(withId(R.id.SignIn)).perform(click());
@@ -77,6 +61,13 @@ public class memberFunctionalityTest {
 
         timeout();
         onView(withId(R.id.MemViewClasses)).perform(click());
+
+        timeout();
+        timeout();
+        timeout();
+
+        // Supposed to click the join button
+        onData(withId(R.id.class_recycler_view)).atPosition(0);
     }
 
     @Test
@@ -96,6 +87,13 @@ public class memberFunctionalityTest {
 
         timeout();
         onView(withId(R.id.JoinClass)).perform(click());
+
+        timeout();
+        timeout();
+        timeout();
+
+        // Supposed to click the join button
+        onData(withId(R.id.class_recycler_view)).atPosition(0);
     }
 
     @Test
@@ -115,6 +113,13 @@ public class memberFunctionalityTest {
 
         timeout();
         onView(withId(R.id.ViewEnrolled)).perform(click());
+
+        timeout();
+        timeout();
+        timeout();
+
+        // Supposed to see all of the classes that they signed up for
+        onData(withId(R.id.class_recycler_view)).atPosition(0);
     }
 
 }
