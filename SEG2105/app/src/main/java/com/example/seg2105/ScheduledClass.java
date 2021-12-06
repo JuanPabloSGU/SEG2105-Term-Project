@@ -49,7 +49,7 @@ public class ScheduledClass extends Model.ModelHack {
         boolean flag = true;
         for(int x=0;x<classes.size();x++){
             ScheduledClass temp=classes.get(x);
-            if(temp.day_of_the_week.equals(day_of_the_week) && instructor.equals(temp.instructor)){
+            if(temp.day_of_the_week.equals(day_of_the_week) && instructor.getId().equals(temp.instructor.getId())){
                 if(temp.time.equals(time)){
                     cb.onError("Class already exists");
                     flag=false;
