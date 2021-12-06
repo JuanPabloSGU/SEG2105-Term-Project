@@ -21,6 +21,7 @@ import androidx.test.espresso.action.Tap;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
@@ -28,6 +29,7 @@ import static org.hamcrest.Matchers.not;
 
 import android.view.View;
 
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -198,9 +200,12 @@ public class memberFunctionalityTest {
         timeout();
         timeout();
 
-        onView(isRoot()).perform(clickXY(790,45));
+        onData(anything()).inAdapterView(withContentDescription(2131296444))
+                .atPosition(0).perform(click());
 
-        timeout();
+//        onView(isRoot()).perform(clickXY(790,45));
+//
+//        timeout();
     }
 
     public static ViewAction clickXY(final int x, final int y){
