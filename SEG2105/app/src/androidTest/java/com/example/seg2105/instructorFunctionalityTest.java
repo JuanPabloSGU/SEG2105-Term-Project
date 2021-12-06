@@ -6,16 +6,26 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 
+import android.view.View;
+
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.action.CoordinatesProvider;
+import androidx.test.espresso.action.GeneralClickAction;
+import androidx.test.espresso.action.Press;
+import androidx.test.espresso.action.Tap;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -132,7 +142,6 @@ public class instructorFunctionalityTest {
         timeout();
         onView(withId(R.id.SearchByClass)).perform(click());
 
-
         timeout();
         onView(withId(R.id.spinnerClass)).perform(click());
 
@@ -162,6 +171,9 @@ public class instructorFunctionalityTest {
 
         timeout();
         onView(withId(R.id.SearchAll)).perform(click());
+
+        timeout();
+        timeout();
     }
 
     @Test
@@ -184,9 +196,33 @@ public class instructorFunctionalityTest {
 
         timeout();
         timeout();
+        timeout();
+        timeout();
 
         // Supposed to click on the delete button
-        onData(withId(R.id.class_recycler_view)).atPosition(0);
+        clickXY(782, 28);
 
+        timeout();
+
+    }
+
+    public static ViewAction clickXY(final int x, final int y){
+        return new GeneralClickAction(
+                Tap.SINGLE,
+                new CoordinatesProvider() {
+                    @Override
+                    public float[] calculateCoordinates(View view) {
+
+                        final int[] screenPos = new int[2];
+                        view.getLocationOnScreen(screenPos);
+
+                        final float screenX = screenPos[0] + x;
+                        final float screenY = screenPos[1] + y;
+                        float[] coordinates = {screenX, screenY};
+
+                        return coordinates;
+                    }
+                },
+                Press.FINGER);
     }
 }

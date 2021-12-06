@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     tools:ignore="MissingDefaultResource">
@@ -19,8 +18,9 @@
         android:id="@+id/delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:textSize="10sp"
-        />
+        android:textSize="10sp" />
+
 </LinearLayout>
