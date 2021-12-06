@@ -7,6 +7,7 @@
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_admin_page.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_class_types.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_create_classes.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_create_scheduled_class.xml" value="0.32563405797101447" />
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_edit_classes.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_edit_description.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_instr_page.xml" value="0.2957427536231884" />
@@ -16,6 +17,7 @@
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_user_manager.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_welcome_page.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/item_class_type.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/IsaacIntel/Git/SEG_termProject/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/item_user.xml" value="0.19427083333333334" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21770833333333334" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/drawable/ic_launcher_background.xml" value="0.21770833333333334" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_admin_page.xml" value="0.33" />
@@ -25,14 +27,13 @@
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_edit_classes.xml" value="0.25" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_edit_description.xml" value="0.1" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_instr_page.xml" value="0.1" />
-        <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_join_class.xml" value="0.20018115942028986" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_main2.xml" value="0.33" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_member_page.xml" value="0.20153985507246377" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_classname.xml" value="0.18" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_classname_member.xml" value="0.2015625" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_day.xml" value="0.2015625" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_instr.xml" value="0.15526849037487336" />
-        <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_view.xml" value="0.21750663129973474" />
+        <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_sign_in.xml" value="0.33" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_user_manager.xml" value="0.22" />
@@ -40,7 +41,7 @@
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_view_enrolled.xml" value="0.2015625" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_welcome_page.xml" value="0.1" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/item_class_type.xml" value="0.1" />
-        <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/item_user.xml" value="0.1" />
+        <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/item_user.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Term Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_admin_page.xml" value="0.1" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Term Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_class_types.xml" value="0.2203125" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Term Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_create_classes.xml" value="0.1" />
@@ -55,17 +56,20 @@
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Term Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/item_class_type.xml" value="0.1" />
         <entry key="..\:/Users/J/Documents/School/Fall 2021/SEG2105/Term Project/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/item_user.xml" value="0.1" />
         <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_create_classes.xml" value="0.41354166666666664" />
+        <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_create_scheduled_class.xml" value="0.45416666666666666" />
         <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_instr_page.xml" value="0.33" />
         <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_join_class.xml" value="0.1" />
         <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_member_page.xml" value="0.1" />
         <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_classname.xml" value="0.5333333333333333" />
         <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_classname_member.xml" value="0.2695035460992908" />
+        <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_search_day.xml" value="0.45416666666666666" />
         <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/activity_welcome_page.xml" value="0.2703125" />
         <entry key="..\:/Users/nrgtn/git/seg2105/Lab0/SEG2105-Term-Project/SEG2105/app/src/main/res/layout/member_page.xml" value="0.5541666666666667" />
         <entry key="app/src/main/res/layout-w1240dp/activity_email_password.xml" value="0.12215528781793843" />
         <entry key="app/src/main/res/layout-w936dp/activity_email_password.xml" value="0.142578125" />
         <entry key="app/src/main/res/layout-w936dp/user_manager_item.xml" value="0.25859375" />
         <entry key="app/src/main/res/layout/activity_class_types.xml" value="0.34479166666666666" />
+        <entry key="app/src/main/res/layout/activity_create_classes.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_email_password.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_user_manager.xml" value="0.38140020898641586" />
